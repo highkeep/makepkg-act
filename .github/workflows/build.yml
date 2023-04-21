@@ -20,7 +20,7 @@ on:
       arch:
         type: string
         default: alderlake
-      svn:
+      svnTarget:
         type: boolean
         default: false
 
@@ -31,24 +31,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Clone Package
-        id: pkg
+        id: clone
         uses: highkeep/clone-action@main
         with:
           repoUrl: ${{ inputs.repoUrl }}
           repoPkg: ${{ inputs.repoPkg }}
-          scn: ${{ inputs.svn }}
-        # run: |
-        #   git -v
-        #   # if ${{ inputs.git_svn }}; then
-        #   #   git svn clone ${{ inputs.repo_url }} --trunk=trunk/${{ inputs.repo_pkg }} $(basename ${{ inputs.repo_pkg }})
-        #   #   echo "repo_pkg=$(basename ${{ inputs.repo_pkg }})" >> $GITHUB_OUTPUT
-        #   # else
-        #   #   git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
-        #   #   echo "repo_pkg=${{ inputs.repo_pkg }}" >> $GITHUB_OUTPUT
-        #   # fi
-      # - name: echo pkg 
-      #   run: |
-      #     echo ${{ steps.pkg.output }}
+          svnTarget: ${{ inputs.svnTarget }}
+      - name: echo pkg 
+        run: |
+          echo ${{ steps.clone.outputs.pkg }}
+          echo ${{ steps.clone.outputs.pkgRef }}
       # - name: Set PKGBUILD architecture 
       #   run: |
       #     if [[ ${{ inputs.arch }} != 'generic_x86_64' ]]; then
