@@ -25,22 +25,26 @@ jobs:
   package: 
     runs-on: ubuntu-latest
     steps:
-    - name: Clone Package
-      run: |
-        git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
-    - name: Set PKGBUILD architecture 
-      run: |
-        if [[ ${{ inputs.architecture }} != 'generic_x86_64' ]]; then
-          source functions.sh && setArch ${{ inputs.architecture }} ${{ inputs.repo_pkg }}/PKGBUILD
-        fi
-        cat ${{ inputs.repo_pkg }}/PKGBUILD
-    - name: Makepkg Build and Check
-      id: makepkg
-      uses: highkeep/pkgbuild-action@master
-      with:
-        pkgdir: ${{ inputs.repo_pkg }}
-        pacmanConf: "configs/${{ inputs.architecture }}_pacman.conf"
-        makepkgConf: "configs/${{ inputs.architecture }}_makepkg.conf"
-        makepkgArgs: ${{ inputs.makepkgArgs }}
-        multilib: ${{ inputs.multilib }}
-        nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      - name: ls
+        run: |
+          ls -l
+    # - name: Clone Package
+    #   run: |
+    #     git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
+    # - name: Set PKGBUILD architecture 
+    #   run: |
+    #     ls -l
+    #     if [[ ${{ inputs.architecture }} != 'generic_x86_64' ]]; then
+    #       source functions.sh && setArch ${{ inputs.architecture }} ${{ inputs.repo_pkg }}/PKGBUILD
+    #     fi
+    #     cat ${{ inputs.repo_pkg }}/PKGBUILD
+    # - name: Makepkg Build and Check
+    #   id: makepkg
+    #   uses: highkeep/pkgbuild-action@master
+    #   with:
+    #     pkgdir: ${{ inputs.repo_pkg }}
+    #     pacmanConf: "configs/${{ inputs.architecture }}_pacman.conf"
+    #     makepkgConf: "configs/${{ inputs.architecture }}_makepkg.conf"
+    #     makepkgArgs: ${{ inputs.makepkgArgs }}
+    #     multilib: ${{ inputs.multilib }}
+    #     nvidiaUtils: ${{ inputs.nvidiaUtils }}
