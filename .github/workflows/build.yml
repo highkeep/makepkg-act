@@ -20,6 +20,9 @@ on:
       arch:
         type: string
         default: alderlake
+      svn:
+        type: boolean
+        default: false
 
 jobs:
   package: 
@@ -29,10 +32,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Clone Package
         run: |
-          git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
+          if ${{ inputs.svn }}; then
+            source functions.sh && git-svn ${{ inputs.repo_url }} aur/${{ inputs.repo_pkg }}
+            source functions.sh && echo "sum=$(genLocalSum ${{ inputs.repo_pkg }})" >> $GITHUB_OUTPUT
+            source functions.sh && echo $(checkLocalVersion ${{ inputs.repo_pkg }}) >> $GITHUB_OUTPUT
+          else
+            git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
+          fi
       - name: Set PKGBUILD architecture 
         run: |
-          ls -l
           if [[ ${{ inputs.arch }} != 'generic_x86_64' ]]; then
             source functions.sh && setArch ${{ inputs.arch }} ${{ inputs.repo_pkg }}/PKGBUILD
           fi

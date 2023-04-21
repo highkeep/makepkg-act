@@ -1,13 +1,14 @@
 #!/bin/bash
 
 git-svn() {
-    if [[ ! -z "$1" && ! -z "$2" ]]; then
-        echo "Starting clone/copy ..."
-        repo=$(echo $1 | sed 's/\/$\|.git$//')
-        svn export "$repo/trunk/$2"
-    else
-        echo "Use: git-svn <repository> <subdirectory>"
-    fi
+    git svn clone ${1} --trunk=trunk/${2} $(basename ${2})
+    # if [[ ! -z "$1" && ! -z "$2" ]]; then
+    #     echo "Starting clone/copy ..."
+    #     repo=$(echo $1 | sed 's/\/$\|.git$//')
+    #     svn export "$repo/trunk/$2"
+    # else
+    #     echo "Use: git-svn <repository> <subdirectory>"
+    # fi
 }
 
 checkGitVersion() {
