@@ -21,6 +21,7 @@ on:
         type: string
         default: alderlake
 
+jobs:
   package: 
     runs-on: ubuntu-latest
     steps:
