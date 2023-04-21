@@ -17,7 +17,7 @@ on:
       nvidiaUtils:
         type: boolean
         default: false
-      architecture:
+      arch:
         type: string
         default: alderlake
 
@@ -25,28 +25,25 @@ jobs:
   package: 
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v3
-      - name: ls
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Clone Package
+        run: |
+          git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
+      - name: Set PKGBUILD architecture 
         run: |
           ls -l
-    # - name: Clone Package
-    #   run: |
-    #     git clone ${{ inputs.repo_url }}/${{ inputs.repo_pkg }}.git
-    # - name: Set PKGBUILD architecture 
-    #   run: |
-    #     ls -l
-    #     if [[ ${{ inputs.architecture }} != 'generic_x86_64' ]]; then
-    #       source functions.sh && setArch ${{ inputs.architecture }} ${{ inputs.repo_pkg }}/PKGBUILD
-    #     fi
-    #     cat ${{ inputs.repo_pkg }}/PKGBUILD
-    # - name: Makepkg Build and Check
-    #   id: makepkg
-    #   uses: highkeep/pkgbuild-action@master
-    #   with:
-    #     pkgdir: ${{ inputs.repo_pkg }}
-    #     pacmanConf: "configs/${{ inputs.architecture }}_pacman.conf"
-    #     makepkgConf: "configs/${{ inputs.architecture }}_makepkg.conf"
-    #     makepkgArgs: ${{ inputs.makepkgArgs }}
-    #     multilib: ${{ inputs.multilib }}
-    #     nvidiaUtils: ${{ inputs.nvidiaUtils }}
+          if [[ ${{ inputs.arch }} != 'generic_x86_64' ]]; then
+            source functions.sh && setArch ${{ inputs.arch }} ${{ inputs.repo_pkg }}/PKGBUILD
+          fi
+          cat ${{ inputs.repo_pkg }}/PKGBUILD
+      - name: Makepkg Build and Check
+        id: makepkg
+        uses: highkeep/pkgbuild-action@master
+        with:
+          pkgdir: ${{ inputs.repo_pkg }}
+          pacmanConf: "configs/${{ inputs.arch }}_pacman.conf"
+          makepkgConf: "configs/${{ inputs.arch }}_makepkg.conf"
+          makepkgArgs: ${{ inputs.makepkgArgs }}
+          multilib: ${{ inputs.multilib }}
+          nvidiaUtils: ${{ inputs.nvidiaUtils }}
