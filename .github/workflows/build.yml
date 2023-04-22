@@ -45,6 +45,7 @@ jobs:
         id: setup
         uses: highkeep/makepkg_architecture-action@main
         with:
+          architecture: alderlake
           tplPacmanConf: configs/tpl_pacman.conf
           tplMakepkgConf: configs/tpl_makepkg.conf
           pkg: ${{ steps.clone.outputs.pkg }}
