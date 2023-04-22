@@ -48,7 +48,6 @@ jobs:
           tplPacmanConf: configs/tpl_pacman.conf
           tplMakepkgConf: configs/tpl_makepkg.conf
           pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: true
       # - name: Set PKGBUILD architecture 
       #   run: |
       #     if [[ ${{ inputs.arch }} != 'generic_x86_64' ]]; then
