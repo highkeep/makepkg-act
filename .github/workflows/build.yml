@@ -3,12 +3,40 @@ name: build
 on:
   workflow_dispatch:
     inputs:
+      # Clone Action
       repoUrl:
         required: true
         type: string
       repoPkg:
         required: true
         type: string
+      svnTarget:
+        type: boolean
+        default: false
+      # Version Action
+      # Architecture Action
+      architecture:
+        type: string
+      tplPacmanConf:
+        type: string
+      tplMakepkgConf:
+        type: string
+      confOutDir:
+        type: string
+      repoTag:
+        type: string
+      repoTagKey:
+        type: string
+      repoServer:
+        type: string
+      repoServerKey:
+        type: string
+      pkg:
+        type: string
+      updatePkg:
+        type: boolean
+        default: false
+      # Build Action
       makepkgArgs:
         type: string
       multilib:
@@ -17,11 +45,10 @@ on:
       nvidiaUtils:
         type: boolean
         default: false
-      arch:
-        type: string
-      svnTarget:
+      # Upload Action
+      upload:
         type: boolean
-        default: false
+        default: true
 
 jobs:
   package: 
@@ -31,31 +58,77 @@ jobs:
         uses: actions/checkout@v3
       - name: Clone Package
         id: clone
-        uses: highkeep/makepkg_clone-action@main
+        uses: highkeep/pkgbuild_clone-action@main
         with:
           repoUrl: ${{ inputs.repoUrl }}
           repoPkg: ${{ inputs.repoPkg }}
           svnTarget: ${{ inputs.svnTarget }}
-      - name: echo pkg 
+      - name: Check verion
+        id: version
         run: |
-          echo ${{ steps.clone.outputs.pkg }}
-          echo ${{ steps.clone.outputs.pkgRef }}
-      - name: Setup
-        id: setup
-        uses: highkeep/makepkg_architecture-action@main
+          # TODO:
+          # ADD VERSION CHECKER
+          # SHOULD BE HERE
+      - name: Setup Architecture
+        id: setupArch
+        uses: highkeep/pkgbuild_architecture-action@main
         with:
-          architecture: ${{ inputs.arch }}
-          tplPacmanConf: configs/tpl_pacman.conf
-          tplMakepkgConf: configs/tpl_makepkg.conf
+          architecture: ${{ inputs.architecture }}
+          tplPacmanConf: ${{ inputs.tplPacmanConf }}
+          tplMakepkgConf: ${{ inputs.tplPacmanConf }}
+          confOutDir: ${{ inputs.confOutDir }}
+          repoTag: ${{ inputs.repoTag }}
+          repoTagKey: ${{ inputs.repoTagKey }}
+          repoServer: ${{ inputs.repoServer }}
+          repoServerKey: ${{ inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: true
+          updatePkg: ${{ inputs.updatePkg }}
       - name: Makepkg Build and Check
         id: makepkg
         uses: highkeep/pkgbuild-action@master
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
-          pacmanConf: ${{ steps.setup.outputs.pacmanConf }}
-          makepkgConf: ${{ steps.setup.outputs.makepkgConf }}
+          pacmanConf: ${{ steps.setupArch.outputs.pacmanConf }}
+          makepkgConf: ${{ steps.setupArch.outputs.makepkgConf }}
           makepkgArgs: ${{ inputs.makepkgArgs }}
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      - uses: svenstaro/upload-release-action@v2
+        if: ${{ inputs.upload }}
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          tag: ${{ steps.architecture.outputs.repoTag }}
+          file: ${{ steps.makepkg.outputs.pkgfile0 }}
+          overwrite: true
+      - uses: svenstaro/upload-release-action@v2
+        if: ${{ inputs.upload }}
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          tag: ${{ steps.architecture.outputs.repoTag }}
+          file: ${{ steps.makepkg.outputs.repofile0 }}
+          overwrite: true
+      - uses: svenstaro/upload-release-action@v2
+        if: ${{ inputs.upload }}
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          tag: ${{ steps.architecture.outputs.repoTag }}
+          file: ${{ steps.makepkg.outputs.repofile1 }}
+          overwrite: true
+      - uses: svenstaro/upload-release-action@v2
+        if: ${{ inputs.upload }}
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          tag: ${{ steps.architecture.outputs.repoTag }}
+          file: ${{ steps.makepkg.outputs.repofile2 }}
+          overwrite: true
+      - uses: svenstaro/upload-release-action@v2
+        if: ${{ inputs.upload }}
+        with:
+          repo_token: ${{secrets.GITHUB_TOKEN}}
+          tag: ${{ steps.architecture.outputs.repoTag }}
+          file: ${{ steps.makepkg.outputs.repofile3 }}
+          overwrite: true
+      - name: Commit Version Changes
+        run: |
+          # TODO:
+          # POSSIBLE REUSE OF VERSION CHECKER
