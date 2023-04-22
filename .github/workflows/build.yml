@@ -19,7 +19,6 @@ on:
         default: false
       arch:
         type: string
-        default: alderlake
       svnTarget:
         type: boolean
         default: false
@@ -45,24 +44,18 @@ jobs:
         id: setup
         uses: highkeep/makepkg_architecture-action@main
         with:
-          architecture: alderlake
+          architecture: ${{ inputs.arch }}
           tplPacmanConf: configs/tpl_pacman.conf
           tplMakepkgConf: configs/tpl_makepkg.conf
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: true
-      # - name: Set PKGBUILD architecture 
-      #   run: |
-      #     if [[ ${{ inputs.arch }} != 'generic_x86_64' ]]; then
-      #       source functions.sh && setArch ${{ inputs.arch }} ${{ inputs.repo_pkg }}/PKGBUILD
-      #     fi
-      #     cat ${{ inputs.repo_pkg }}/PKGBUILD
-      # - name: Makepkg Build and Check
-      #   id: makepkg
-      #   uses: highkeep/pkgbuild-action@master
-      #   with:
-      #     pkgdir: ${{ inputs.repo_pkg }}
-      #     pacmanConf: "configs/${{ inputs.arch }}_pacman.conf"
-      #     makepkgConf: "configs/${{ inputs.arch }}_makepkg.conf"
-      #     makepkgArgs: ${{ inputs.makepkgArgs }}
-      #     multilib: ${{ inputs.multilib }}
-      #     nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      - name: Makepkg Build and Check
+        id: makepkg
+        uses: highkeep/pkgbuild-action@master
+        with:
+          pkgdir: ${{ steps.clone.outputs.pkg }}
+          pacmanConf: ${{ steps.setup.outputs.pacmanConf }}
+          makepkgConf: ${{ steps.setup.outputs.makepkgConf }}
+          makepkgArgs: ${{ inputs.makepkgArgs }}
+          multilib: ${{ inputs.multilib }}
+          nvidiaUtils: ${{ inputs.nvidiaUtils }}
