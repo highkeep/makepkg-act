@@ -62,6 +62,10 @@ jobs:
       - name: ls -l
         run: |
           ls -l
+      - name: IDs
+        run: |
+          id runner
+          id docker
       # - name: Clone Package
       #   id: clone
       #   uses: highkeep/pkgbuild_clone-action@main
