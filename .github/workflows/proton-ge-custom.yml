@@ -9,7 +9,7 @@ jobs:
     environment: build
     strategy:
       matrix:
-        architectures: ${{ vars.ARCHITECTURES }}
+        ${{ vars.ARCHITECTURES }}
     steps:
       - run: |
           echo ${{ matrix.architectures }}
