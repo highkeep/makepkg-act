@@ -120,9 +120,9 @@ jobs:
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: ${{ inputs.updatePkg }}
       - name: Test 1
-        if: ${{ steps.version.outputs.updatePkg == 'true' }}
         run: |
-          echo Test 1 Ran
+          echo ${{ steps.version.outputs.updatePkg }}
+          echo ${{ inputs.commit }}
       - name: Test 2
         if: ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.commit == 'true' }}
         run: |
