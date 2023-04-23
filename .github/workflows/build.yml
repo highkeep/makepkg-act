@@ -132,6 +132,7 @@ jobs:
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
           repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
       - name: Print Package Files
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
         run: |
           echo "Successfully created the following package archive"
           echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
