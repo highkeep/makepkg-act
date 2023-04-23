@@ -6,9 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: build
     # strategy:
     #   matrix:
     #     architectures: ${{ vars.ARCHITECTURES }}
     steps:
       - run: |
-          echo ${{ vars.BUILD_ARCHITECTURES }}
+          echo ${{ vars.ARCHITECTURES }}
