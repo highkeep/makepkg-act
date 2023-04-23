@@ -125,18 +125,22 @@ jobs:
           echo Test 1 Ran
       - name: Test 2
         if: |
-          ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
+          ${{ steps.version.outputs.updatePkg == 'true' }} || ${{ inputs.upload == 'true' }}
         run: |
           echo Test 2 Ran
       - name: Test 3
         if: |
-          ${{ steps.version.outputs.updatePkg == 'true' }} && 
-          ${{ inputs.commit == 'true' }}
+          ${{ steps.version.outputs.updatePkg == 'true' }} || ${{ inputs.commit == 'true' }}
         run: |
           echo Test 3 Ran
       - name: Test 4
+        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.commit == 'true' }}
         run: |
           echo Test 4 Ran
+      - name: Test 5
+        if: steps.version.outputs.updatePkg == 'true' && inputs.commit == 'true'
+        run: |
+          echo Test 5 Ran
 
       # - name: Makepkg Build and Check
       #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
@@ -154,42 +158,48 @@ jobs:
       #     echo ${{ steps.makepkg.outputs.repofiles }}
       #     echo ${{ steps.makepkg.outputs.pkgfiles }}
       # - uses: svenstaro/upload-release-action@v2
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
       #   with:
       #     repo_token: ${{secrets.GITHUB_TOKEN}}
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.pkgfile0 }}
       #     overwrite: true
       # - uses: svenstaro/upload-release-action@v2
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
       #   with:
       #     repo_token: ${{secrets.GITHUB_TOKEN}}
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.repofile0 }}
       #     overwrite: true
       # - uses: svenstaro/upload-release-action@v2
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
       #   with:
       #     repo_token: ${{secrets.GITHUB_TOKEN}}
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.repofile1 }}
       #     overwrite: true
       # - uses: svenstaro/upload-release-action@v2
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
       #   with:
       #     repo_token: ${{secrets.GITHUB_TOKEN}}
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.repofile2 }}
       #     overwrite: true
       # - uses: svenstaro/upload-release-action@v2
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
       #   with:
       #     repo_token: ${{secrets.GITHUB_TOKEN}}
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.repofile3 }}
       #     overwrite: true
       # - name: Add & Commit
-      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.commit == 'true') }}
+      #   if: |
+      #     ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.commit == 'true' }}
       #   uses: EndBug/add-and-commit@v9.1.1
       #   with:
       #     add: ${{ steps.version.outputs.refFile }}
