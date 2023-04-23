@@ -4,14 +4,25 @@ on:
   workflow_dispatch:
  
 env:
-  architectures: "{\"arch\":[\"generic\", \"alderlake\"]}"
   # architectures: "[\"generic\", \"alderlake\"]"
+  # architectures: "[\"generic\", \"alderlake\"]"
+  architectures: "{\"arch\":[\"generic\", \"alderlake\"]}"
  
 jobs:
+  # setup:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     matrix: ${{ steps.set-matrix.outputs.matrix }}
+  #   steps:
+  #     - id: set-matrix
+  #       run: echo "matrix=${{env.architectures}}" >> $GITHUB_OUTPUT
   build:
+    # needs: setup
     runs-on: ubuntu-latest
     # environment: build
     strategy:
+      # matrix: 
+    #     arch: ${{ fromJSON(needs.setup.outputs.matrix )}}
       matrix: ${{ fromJSON(env.architectures) }}
       # matrix:
       #   arch: ${{ fromJSON(env.architectures) }}
