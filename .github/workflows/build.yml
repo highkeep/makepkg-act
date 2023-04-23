@@ -2,7 +2,7 @@ name: build
 
 on:
   workflow_call:
-    github.event.inputs:
+    inputs:
       # Clone Action
       repoUrl:
         required: true
@@ -52,7 +52,7 @@ on:
         type: boolean
         default: true 
   workflow_dispatch:
-    github.event.inputs:
+    inputs:
       # Clone Action
       repoUrl:
         required: true
