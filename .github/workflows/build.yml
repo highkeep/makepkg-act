@@ -88,12 +88,8 @@ jobs:
   package: 
     runs-on: ubuntu-latest
     steps:
-      - name: eval
-        id: eval
-        run: |
-          echo "status=false">>$GITHUB_OUTPUT
       - name: test eval
-        if: ${{ (steps.eval.outputs.status == 'true') && (github.event.inputs.commit == 'true') }}
+        if: ${{ (github.event.inputs.upload == 'true') && (github.event.inputs.commit == 'true') }}
         run: |
           echo "test ran"
       # - name: Checkout
