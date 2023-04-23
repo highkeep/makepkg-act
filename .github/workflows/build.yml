@@ -169,6 +169,9 @@ jobs:
       #     tag: ${{ steps.architecture.outputs.repoTag }}
       #     file: ${{ steps.makepkg.outputs.repofile3 }}
       #     overwrite: true
+      # - name: git status
+      #   run: |
+      #     git status
       - name: Add & Commit
         if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit == 'true' }}
         uses: EndBug/add-and-commit@v9.1.1
