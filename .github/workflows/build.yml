@@ -178,7 +178,7 @@ jobs:
         with:
           add: ${{ steps.version.outputs.refFile }}
           fetch: true
-          pull: --rebase
+          pull: --rebase --autostash
   # test: 
   #   runs-on: ubuntu-latest
   #   steps:
