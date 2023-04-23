@@ -130,6 +130,7 @@ jobs:
           makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
           multilib: ${{ github.event.inputs.multilib }}
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
+          repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
       - name: Print Package Files
         run: |
           echo "Successfully created the following package archive"
