@@ -130,6 +130,10 @@ jobs:
           makepkgArgs: ${{ inputs.makepkgArgs }}
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      - name: echo repofiles and pkgfiles
+        run: |
+          echo ${{ steps.makepkg.outputs.repofiles }}
+          echo ${{ steps.makepkg.outputs.pkgfiles }}
       - uses: svenstaro/upload-release-action@v2
         if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
