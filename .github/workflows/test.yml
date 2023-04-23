@@ -1,0 +1,27 @@
+name: test
+
+on:
+  workflow_call:
+    inputs:
+      repoUrl:
+        required: true
+        type: string
+      repoPkg:
+        required: true
+        type: string
+      svnTarget:
+        type: boolean
+        default: false
+      architecture:
+        type: string
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print
+        run: |
+          echo $repoURL
+          echo $repoPKG
+          echo $scnTarget
+          echo $architecture

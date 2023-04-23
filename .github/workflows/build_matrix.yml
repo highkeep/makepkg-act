@@ -1,0 +1,41 @@
+name: build_matrix
+
+on:
+  workflow_call:
+    inputs:
+      repoUrl:
+        required: true
+        type: string
+      repoPkg:
+        required: true
+        type: string
+      svnTarget:
+        type: boolean
+        default: false
+      architecture:
+        type: string
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo "matrix=$architecture" >> $GITHUB_OUTPUT
+        env:
+          architecture: ${{ github.event.inputs.architecture }}
+  process:
+    needs: setup
+    runs-on: ubuntu-latest
+    # environment: build
+    strategy:
+      matrix: 
+        arch: ${{fromJson(needs.setup.outputs.matrix)}}
+    uses: highkeep/pkgbuilder/actions/workflows/build.yml@main
+    with:
+      repoURL: ${{ github.event.inputs.repoURL }}
+      repoPkg: ${{ github.event.inputs.repoPkg }}
+      svnTarget: ${{ github.event.inputs.svnTarget }}
+      architecture: ${{ matrix.arch }}
