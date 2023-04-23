@@ -3,13 +3,15 @@ name: proton
 on:
   workflow_dispatch:
 
+env:
+  architectures: "[\"generic\", \"alderlake\"]"
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: build
     strategy:
       matrix:
-        arch: ${{ fromJson(vars.ARCHITECTURES) }}
+        arch: ${{ fromJson(env.architectures) }}
     steps:
       - run: |
           echo ${{ matrix.arch }}
