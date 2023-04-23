@@ -67,25 +67,30 @@ jobs:
         id: version
         uses: highkeep/pkgbuild_version-action@main
         with:
-          repoTag: ${{ inputs.repoTagKey }}
+          repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
           pkgRef: ${{ steps.clone.outputs.pkgRef }}
           ghRepo: ${{ github.repository }}
           ghToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Architecture
-        id: setupArch
-        uses: highkeep/pkgbuild_architecture-action@main
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.1
         with:
-          architecture: ${{ inputs.architecture }}
-          tplPacmanConf: ${{ inputs.tplPacmanConf }}
-          tplMakepkgConf: ${{ inputs.tplPacmanConf }}
-          confOutDir: ${{ inputs.confOutDir }}
-          repoTag: ${{ inputs.repoTag }}
-          repoTagKey: ${{ inputs.repoTagKey }}
-          repoServer: ${{ inputs.repoServer }}
-          repoServerKey: ${{ inputs.repoServerKey }}
-          pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: ${{ inputs.updatePkg }}
+          default_author: github_actions
+      # - name: Setup Architecture
+      #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
+      #   id: setupArch
+      #   uses: highkeep/pkgbuild_architecture-action@main
+      #   with:
+      #     architecture: ${{ inputs.architecture }}
+      #     tplPacmanConf: ${{ inputs.tplPacmanConf }}
+      #     tplMakepkgConf: ${{ inputs.tplPacmanConf }}
+      #     confOutDir: ${{ inputs.confOutDir }}
+      #     repoTag: ${{ inputs.repoTag }}
+      #     repoTagKey: ${{ inputs.repoTagKey }}
+      #     repoServer: ${{ inputs.repoServer }}
+      #     repoServerKey: ${{ inputs.repoServerKey }}
+      #     pkg: ${{ steps.clone.outputs.pkg }}
+      #     updatePkg: ${{ inputs.updatePkg }}
       # - name: Makepkg Build and Check
       #   id: makepkg
       #   uses: highkeep/pkgbuild-action@master
