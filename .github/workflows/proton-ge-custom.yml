@@ -1,0 +1,11 @@
+name: proton
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+    #     architectures: ${{ vars.ARCHITECTURES }}
+    steps:
+      - run: |
+          echo ${{ vars.ARCHITECTURES }}
