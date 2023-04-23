@@ -125,8 +125,8 @@ jobs:
         uses: highkeep/pkgbuild-action@master
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
-          pacmanConf: ${{ steps.setupArch.outputs.pacmanConf }}
-          makepkgConf: ${{ steps.setupArch.outputs.makepkgConf }}
+          pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
+          makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
           makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
           multilib: ${{ github.event.inputs.multilib }}
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
