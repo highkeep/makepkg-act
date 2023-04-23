@@ -125,12 +125,12 @@ jobs:
           echo Test 1 Ran
       - name: Test 2
         if: |
-          ${{ steps.version.outputs.updatePkg == 'true' }} || ${{ inputs.upload == 'true' }}
+          ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.upload == 'true' }}
         run: |
           echo Test 2 Ran
       - name: Test 3
         if: |
-          ${{ steps.version.outputs.updatePkg == 'true' }} || ${{ inputs.commit == 'true' }}
+          ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ inputs.commit == 'true' }}
         run: |
           echo Test 3 Ran
       - name: Test 4
