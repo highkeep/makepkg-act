@@ -7,9 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: build
-    # strategy:
-    #   matrix:
-    #     architectures: ${{ vars.ARCHITECTURES }}
+    strategy:
+      matrix:
+        architectures: ${{ vars.ARCHITECTURES }}
     steps:
       - run: |
-          echo ${{ vars.ARCHITECTURES }}
+          echo ${{ architectures }}
