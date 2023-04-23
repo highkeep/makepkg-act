@@ -23,8 +23,8 @@ on:
       #   type: string
       # confOutDir:
       #   type: string
-      # repoTag:
-      #   type: string
+      repoTag:
+        type: string
       # repoTagKey:
       #   type: string
       # repoServer:
@@ -73,6 +73,7 @@ jobs:
       - name: Add & Commit
         uses: EndBug/add-and-commit@v9.1.1
         with:
+          add: ${{ steps.version.outputs.refFile }}
           default_author: github_actor
       # - name: Setup Architecture
       #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
