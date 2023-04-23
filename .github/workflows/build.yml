@@ -119,21 +119,21 @@ jobs:
           repoServerKey: ${{ inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: ${{ inputs.updatePkg }}
-      - name: Makepkg Build and Check
-        if: ${{ steps.version.outputs.updatePkg == 'true' }}
-        id: makepkg
-        uses: highkeep/pkgbuild-action@master
-        with:
-          pkgdir: ${{ steps.clone.outputs.pkg }}
-          pacmanConf: ${{ steps.setupArch.outputs.pacmanConf }}
-          makepkgConf: ${{ steps.setupArch.outputs.makepkgConf }}
-          makepkgArgs: ${{ inputs.makepkgArgs }}
-          multilib: ${{ inputs.multilib }}
-          nvidiaUtils: ${{ inputs.nvidiaUtils }}
-      - name: echo repofiles and pkgfiles
-        run: |
-          echo ${{ steps.makepkg.outputs.repofiles }}
-          echo ${{ steps.makepkg.outputs.pkgfiles }}
+      # - name: Makepkg Build and Check
+      #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
+      #   id: makepkg
+      #   uses: highkeep/pkgbuild-action@master
+      #   with:
+      #     pkgdir: ${{ steps.clone.outputs.pkg }}
+      #     pacmanConf: ${{ steps.setupArch.outputs.pacmanConf }}
+      #     makepkgConf: ${{ steps.setupArch.outputs.makepkgConf }}
+      #     makepkgArgs: ${{ inputs.makepkgArgs }}
+      #     multilib: ${{ inputs.multilib }}
+      #     nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      # - name: echo repofiles and pkgfiles
+      #   run: |
+      #     echo ${{ steps.makepkg.outputs.repofiles }}
+      #     echo ${{ steps.makepkg.outputs.pkgfiles }}
       - uses: svenstaro/upload-release-action@v2
         if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
         with:
