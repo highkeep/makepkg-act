@@ -130,6 +130,14 @@ jobs:
           makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
           multilib: ${{ github.event.inputs.multilib }}
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
+      - name: Print Package Files
+        run: |
+          echo "Successfully created the following package archive"
+          echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
+          echo "Package: ${{ steps.makepkg.outputs.repofile0 }}"
+          echo "Package: ${{ steps.makepkg.outputs.repofile1 }}"
+          echo "Package: ${{ steps.makepkg.outputs.repofile2 }}"
+          echo "Package: ${{ steps.makepkg.outputs.repofile3 }}"
       - uses: svenstaro/upload-release-action@v2
         if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
         with:
