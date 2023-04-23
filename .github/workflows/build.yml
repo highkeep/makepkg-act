@@ -132,7 +132,7 @@ jobs:
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
           repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
       - name: Print Package Files
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         run: |
           echo "Successfully created the following package archive"
           echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
@@ -141,35 +141,35 @@ jobs:
           echo "Package: ${{ steps.makepkg.outputs.repofile2 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile3 }}"
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.pkgfile0 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile0 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile1 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile2 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
@@ -179,7 +179,7 @@ jobs:
         run: |
           git status
       - name: Add & Commit
-        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit }}
         uses: EndBug/add-and-commit@v9.1.1
         with:
           add: ${{ steps.version.outputs.refFile }}
