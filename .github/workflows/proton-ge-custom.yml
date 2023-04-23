@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         # arch: ${{ fromJSON(vars.ARCHITECTURES) }}
-        arch: ${{ fromJSON(env.architectures) }}
+        arch: ${{ fromJSON(${{env.architectures}}) }}
     steps:
       - run: |
           echo ${{ matrix.arch }}
