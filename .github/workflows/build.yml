@@ -1,6 +1,56 @@
 name: build
 
 on:
+  workflow_call:
+    inputs:
+      # Clone Action
+      repoUrl:
+        required: true
+        type: string
+      repoPkg:
+        required: true
+        type: string
+      svnTarget:
+        type: boolean
+        default: false
+      # Architecture Action
+      architecture:
+        type: string
+      tplPacmanConf:
+        type: string
+      tplMakepkgConf:
+        type: string
+      confOutDir:
+        type: string
+      repoTag:
+        type: string
+      repoTagKey:
+        type: string
+      repoServer:
+        type: string
+      repoServerKey:
+        type: string
+      pkg:
+        type: string
+      updatePkg:
+        type: boolean
+        default: false
+      # # Build Action
+      makepkgArgs:
+        type: string
+      multilib:
+        type: boolean
+        default: false
+      nvidiaUtils:
+        type: boolean
+        default: false
+      # # Upload Action
+      upload:
+        type: boolean
+        default: true
+      commit:
+        type: boolean
+        default: true 
   workflow_dispatch:
     inputs:
       # Clone Action
@@ -13,30 +63,11 @@ on:
       svnTarget:
         type: boolean
         default: false
-      # Version Action
       # Architecture Action
       architecture:
         type: string
-      # tplPacmanConf:
-      #   type: string
-      # tplMakepkgConf:
-      #   type: string
-      # confOutDir:
-      #   type: string
       repoTag:
         type: string
-      # repoTagKey:
-      #   type: string
-      # repoServer:
-      #   type: string
-      # repoServerKey:
-      #   type: string
-      # pkg:
-      #   type: string
-      # updatePkg:
-      #   type: boolean
-      #   default: false
-      # # Build Action
       makepkgArgs:
         type: string
       multilib:
@@ -45,7 +76,7 @@ on:
       nvidiaUtils:
         type: boolean
         default: false
-      # # Upload Action
+      # Upload Action
       upload:
         type: boolean
         default: true
