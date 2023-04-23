@@ -131,6 +131,10 @@ jobs:
         if: ${{ (steps.version.outputs.updatePkg == 'true' && inputs.commit == 'true') }}
         run: |
           echo Test 3 Ran
+      - name: Test 4
+        run: |
+          echo Test 4 Ran
+
       # - name: Makepkg Build and Check
       #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
       #   id: makepkg
