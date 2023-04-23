@@ -59,6 +59,9 @@ jobs:
       - name: Get ENV
         run: |
           env
+      - name: ls -l
+        run: |
+          ls -l
       # - name: Clone Package
       #   id: clone
       #   uses: highkeep/pkgbuild_clone-action@main
