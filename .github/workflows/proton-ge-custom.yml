@@ -2,14 +2,18 @@ name: proton
 
 on:
   workflow_dispatch:
-
+ 
+env:
+  architectures: "[generic, alderlake]"
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: build
+    # environment: build
     strategy:
       matrix:
-        arch: ${{ fromJSON(vars.ARCHITECTURES) }}
+        # arch: ${{ fromJSON(vars.ARCHITECTURES) }}
+        arch: ${{ fromJSON(env.architectures) }}
     steps:
       - run: |
           echo ${{ matrix.arch }}
