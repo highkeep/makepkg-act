@@ -11,4 +11,4 @@ jobs:
     #     architectures: ${{ vars.ARCHITECTURES }}
     steps:
       - run: |
-          echo ${{ vars.ARCHITECTURES }}
+          echo ${{ vars.BUILD_ARCHITECTURES }}
