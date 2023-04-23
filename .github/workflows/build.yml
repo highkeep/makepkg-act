@@ -170,7 +170,7 @@ jobs:
           file: ${{ steps.makepkg.outputs.repofile3 }}
           overwrite: true
       - name: Add & Commit
-        if: ${{ steps.version.outputs.updatePkg && inputs.commit == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit == 'true' }}
         uses: EndBug/add-and-commit@v9.1.1
         with:
           add: ${{ steps.version.outputs.refFile }}
