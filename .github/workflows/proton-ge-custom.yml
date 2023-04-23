@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: ${{ fromJson(env.architectures) }}
+        arch: ${{ fromJSON(env.architectures) }}
     steps:
       - run: |
           echo ${{ matrix.arch }}
