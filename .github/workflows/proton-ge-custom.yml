@@ -4,16 +4,16 @@ on:
   workflow_dispatch:
  
 env:
-  architectures: "[\"generic\", \"alderlake\"]"
+  architectures: "{\"include\":[{\"arch\":\"generic\"}, {\"arch\":\"alderlake\"]}"
  
 jobs:
   build:
     runs-on: ubuntu-latest
     # environment: build
     strategy:
-      matrix:
+      matrix: ${{ env.architectures }}
         # arch: ${{ fromJSON(vars.ARCHITECTURES) }}
-        arch: ${{ fromJSON(env.architectures) }}
+        # arch: ${{ fromJSON(env.architectures) }}
     steps:
       - run: |
           echo ${{ matrix.arch }}
