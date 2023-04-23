@@ -131,42 +131,42 @@ jobs:
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.upload == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.pkgfile0 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.upload == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile0 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.upload == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile1 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.upload == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile2 }}
           overwrite: true
       - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.upload == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.upload == 'true') }}
         with:
           repo_token: ${{secrets.GITHUB_TOKEN}}
           tag: ${{ steps.architecture.outputs.repoTag }}
           file: ${{ steps.makepkg.outputs.repofile3 }}
           overwrite: true
       - name: Add & Commit
-        if: ${{ steps.version.outputs.updatePkg == 'true' && inputs.commit == 'true' }}
+        if: ${{ (steps.version.outputs.updatePkg == 'true') && (inputs.commit == 'true') }}
         uses: EndBug/add-and-commit@v9.1.1
         with:
           add: ${{ steps.version.outputs.refFile }}
