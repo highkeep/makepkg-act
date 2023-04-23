@@ -130,10 +130,6 @@ jobs:
           makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
           multilib: ${{ github.event.inputs.multilib }}
           nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
-      - name: echo repofiles and pkgfiles
-        run: |
-          echo ${{ steps.makepkg.outputs.repofiles }}
-          echo ${{ steps.makepkg.outputs.pkgfiles }}
       - uses: svenstaro/upload-release-action@v2
         if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
         with:
