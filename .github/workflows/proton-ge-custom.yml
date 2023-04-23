@@ -12,4 +12,4 @@ jobs:
         architectures: ${{ vars.ARCHITECTURES }}
     steps:
       - run: |
-          echo ${{ architectures }}
+          echo ${{ matrix.architectures }}
