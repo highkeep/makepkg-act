@@ -56,33 +56,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Get ENV
-        run: |
-          env
-      - name: ls -l
-        run: |
-          ls -l
-      - name: IDs
-        run: |
-          id runner
-      # - name: Clone Package
-      #   id: clone
-      #   uses: highkeep/pkgbuild_clone-action@main
-      #   with:
-      #     repoUrl: ${{ inputs.repoUrl }}
-      #     repoPkg: ${{ inputs.repoPkg }}
-      #     svnTarget: ${{ inputs.svnTarget }}
-      # - name: Check version
-      #   id: version
-      #   uses: highkeep/pkgbuild_version-action@main
-      #   with:
-      #     repoTag: ${{ inputs.repoTag }}
-      #     pkg: ${{ steps.clone.outputs.pkg }}
-      #     pkgRef: ${{ steps.clone.outputs.pkgRef }}
-      # - name: Add & Commit
-      #   uses: EndBug/add-and-commit@v9.1.1
-      #   with:
-      #     default_author: github_actions
+      - name: Clone Package
+        id: clone
+        uses: highkeep/pkgbuild_clone-action@main
+        with:
+          repoUrl: ${{ inputs.repoUrl }}
+          repoPkg: ${{ inputs.repoPkg }}
+          svnTarget: ${{ inputs.svnTarget }}
+      - name: Check version
+        id: version
+        uses: highkeep/pkgbuild_version-action@main
+        with:
+          repoTag: ${{ inputs.repoTag }}
+          pkg: ${{ steps.clone.outputs.pkg }}
+          pkgRef: ${{ steps.clone.outputs.pkgRef }}
+      - name: Add & Commit
+        uses: EndBug/add-and-commit@v9.1.1
+        with:
+          default_author: github_actions
       # - name: Setup Architecture
       #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
       #   id: setupArch
