@@ -9,7 +9,7 @@ jobs:
     environment: build
     strategy:
       matrix:
-        arch: fromjson( ${{ vars.ARCHITECTURES }} )
+        arch: fromJson( ${{ vars.ARCHITECTURES }} )
     steps:
       - run: |
           echo ${{ matrix.arch }}
