@@ -106,7 +106,7 @@ jobs:
           pkgRef: ${{ steps.clone.outputs.pkgRef }}
       - name: Setup Architecture
         if: ${{ steps.version.outputs.updatePkg == 'true' }}
-        id: setupArch
+        id: architecture
         uses: highkeep/pkgbuild_architecture-action@main
         with:
           architecture: ${{ github.event.inputs.architecture }}
