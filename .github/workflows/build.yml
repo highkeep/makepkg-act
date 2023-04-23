@@ -15,40 +15,40 @@ on:
         default: false
       # Version Action
       # Architecture Action
-      architecture:
-        type: string
-      tplPacmanConf:
-        type: string
-      tplMakepkgConf:
-        type: string
-      confOutDir:
-        type: string
-      repoTag:
-        type: string
-      repoTagKey:
-        type: string
-      repoServer:
-        type: string
-      repoServerKey:
-        type: string
-      pkg:
-        type: string
-      updatePkg:
-        type: boolean
-        default: false
-      # Build Action
-      makepkgArgs:
-        type: string
-      multilib:
-        type: boolean
-        default: false
-      nvidiaUtils:
-        type: boolean
-        default: false
-      # Upload Action
-      upload:
-        type: boolean
-        default: true
+      # architecture:
+      #   type: string
+      # tplPacmanConf:
+      #   type: string
+      # tplMakepkgConf:
+      #   type: string
+      # confOutDir:
+      #   type: string
+      # repoTag:
+      #   type: string
+      # repoTagKey:
+      #   type: string
+      # repoServer:
+      #   type: string
+      # repoServerKey:
+      #   type: string
+      # pkg:
+      #   type: string
+      # updatePkg:
+      #   type: boolean
+      #   default: false
+      # # Build Action
+      # makepkgArgs:
+      #   type: string
+      # multilib:
+      #   type: boolean
+      #   default: false
+      # nvidiaUtils:
+      #   type: boolean
+      #   default: false
+      # # Upload Action
+      # upload:
+      #   type: boolean
+      #   default: true
 
 jobs:
   package: 
