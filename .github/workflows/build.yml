@@ -2,7 +2,7 @@ name: build
 
 on:
   workflow_call:
-    inputs:
+    github.event.inputs:
       # Clone Action
       repoUrl:
         required: true
@@ -52,7 +52,7 @@ on:
         type: boolean
         default: true 
   workflow_dispatch:
-    inputs:
+    github.event.inputs:
       # Clone Action
       repoUrl:
         required: true
@@ -94,14 +94,14 @@ jobs:
         id: clone
         uses: highkeep/pkgbuild_clone-action@main
         with:
-          repoUrl: ${{ inputs.repoUrl }}
-          repoPkg: ${{ inputs.repoPkg }}
-          svnTarget: ${{ inputs.svnTarget }}
+          repoUrl: ${{ github.event.inputs.repoUrl }}
+          repoPkg: ${{ github.event.inputs.repoPkg }}
+          svnTarget: ${{ github.event.inputs.svnTarget }}
       - name: Check version
         id: version
         uses: highkeep/pkgbuild_version-action@main
         with:
-          repoTag: ${{ inputs.repoTag }}
+          repoTag: ${{ github.event.inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
           pkgRef: ${{ steps.clone.outputs.pkgRef }}
       - name: Setup Architecture
@@ -109,16 +109,16 @@ jobs:
         id: setupArch
         uses: highkeep/pkgbuild_architecture-action@main
         with:
-          architecture: ${{ inputs.architecture }}
-          tplPacmanConf: ${{ inputs.tplPacmanConf }}
-          tplMakepkgConf: ${{ inputs.tplPacmanConf }}
-          confOutDir: ${{ inputs.confOutDir }}
-          repoTag: ${{ inputs.repoTag }}
-          repoTagKey: ${{ inputs.repoTagKey }}
-          repoServer: ${{ inputs.repoServer }}
-          repoServerKey: ${{ inputs.repoServerKey }}
+          architecture: ${{ github.event.inputs.architecture }}
+          tplPacmanConf: ${{ github.event.inputs.tplPacmanConf }}
+          tplMakepkgConf: ${{ github.event.inputs.tplPacmanConf }}
+          confOutDir: ${{ github.event.inputs.confOutDir }}
+          repoTag: ${{ github.event.inputs.repoTag }}
+          repoTagKey: ${{ github.event.inputs.repoTagKey }}
+          repoServer: ${{ github.event.inputs.repoServer }}
+          repoServerKey: ${{ github.event.inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: ${{ inputs.updatePkg }}
+          updatePkg: ${{ github.event.inputs.updatePkg }}
       # - name: Makepkg Build and Check
       #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
       #   id: makepkg
@@ -127,50 +127,50 @@ jobs:
       #     pkgdir: ${{ steps.clone.outputs.pkg }}
       #     pacmanConf: ${{ steps.setupArch.outputs.pacmanConf }}
       #     makepkgConf: ${{ steps.setupArch.outputs.makepkgConf }}
-      #     makepkgArgs: ${{ inputs.makepkgArgs }}
-      #     multilib: ${{ inputs.multilib }}
-      #     nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      #     makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
+      #     multilib: ${{ github.event.inputs.multilib }}
+      #     nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
       # - name: echo repofiles and pkgfiles
       #   run: |
       #     echo ${{ steps.makepkg.outputs.repofiles }}
       #     echo ${{ steps.makepkg.outputs.pkgfiles }}
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.pkgfile0 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile0 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile1 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile2 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ steps.version.outputs.updatePkg && inputs.upload == 'true' }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile3 }}
-          overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.pkgfile0 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile0 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile1 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile2 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ steps.version.outputs.updatePkg && github.event.inputs.upload == 'true' }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile3 }}
+      #     overwrite: true
       - name: Add & Commit
-        if: ${{ steps.version.outputs.updatePkg && inputs.commit == 'true' }}
+        if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit == 'true' }}
         uses: EndBug/add-and-commit@v9.1.1
         with:
           add: ${{ steps.version.outputs.refFile }}
@@ -188,23 +188,23 @@ jobs:
   #     - name: Test 1
   #       run: |
   #         echo ${{ steps.version.outputs.updatePkg }}
-  #         echo ${{ inputs.commit }}
   #         echo ${{ github.event.inputs.commit }}
+  #         echo ${{ github.event.github.event.inputs.commit }}
   #     - name: Test 2
-  #       if: ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ github.event.inputs.commit == 'true' }}
+  #       if: ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ github.event.github.event.inputs.commit == 'true' }}
   #       run: |
   #         echo Test 2 Ran
   #     - name: Test 3
   #       if: |
-  #         ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ github.event.inputs.commit == 'true' }}
+  #         ${{ steps.version.outputs.updatePkg == 'true' }} && ${{ github.event.github.event.inputs.commit == 'true' }}
   #       run: |
   #         echo Test 3 Ran
   #     - name: Test 4
-  #       if: ${{ steps.version.outputs.updatePkg && github.event.inputs.commit == 'true' }}
+  #       if: ${{ steps.version.outputs.updatePkg && github.event.github.event.inputs.commit == 'true' }}
   #       run: |
   #         echo Test 4 Ran
   #     - name: Test 5
   #       if: |
-  #         ${{ steps.version.outputs.updatePkg == 'true' && inputs.commit == 'true' }}
+  #         ${{ steps.version.outputs.updatePkg == 'true' && github.event.inputs.commit == 'true' }}
   #       run: |
   #         echo Test 5 Ran
