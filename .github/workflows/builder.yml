@@ -124,15 +124,19 @@ jobs:
         run: |
           echo "*************************************************************************"
           echo "*************************************************************************"
-          echo "Contents of pacman.conf:"
+          echo "********** Contents of pacman.conf"
+          echo "*************************************************************************"
+          echo "*************************************************************************"
           cat ${{ steps.architecture.outputs.pacmanConf }}
           echo "*************************************************************************"
           echo "*************************************************************************"
-          echo "Contents of makepkg.conf:"
+          echo "********** Contents of makepkg.conf"
+          echo "*************************************************************************"
+          echo "*************************************************************************"
           cat ${{ steps.architecture.outputs.makepkgConf }}
           echo "*************************************************************************"
           echo "*************************************************************************"
-          echo "Contents of ${{ steps.clone.outputs.pkg }}/PKGBUILD:"
+          echo "********** Contents of ${{ steps.clone.outputs.pkg }}/PKGBUILD"
           cat ${{ steps.clone.outputs.pkg }}/PKGBUILD
           echo "*************************************************************************"
           echo "*************************************************************************"
@@ -151,12 +155,16 @@ jobs:
       - name: Print Package Files
         if: ${{ (fromJson(steps.version.outputs.updatePkg) == true) && (inputs.upload == true) }}
         run: |
+          echo "*************************************************************************"
+          echo "*************************************************************************"
           echo "Successfully created the following package archive"
           echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile0 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile1 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile2 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile3 }}"
+          echo "*************************************************************************"
+          echo "*************************************************************************"
       - uses: svenstaro/upload-release-action@v2
         if: ${{ (fromJson(steps.version.outputs.updatePkg) == true) && (inputs.upload == true) }}
         with:
