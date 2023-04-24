@@ -50,43 +50,53 @@ on:
         default: true
       commit:
         type: boolean
-        default: true 
+        default: true
   workflow_dispatch:
     inputs:
       # Clone Action
       repoUrl:
+        description: ""
         required: true
         type: string
       repoPkg:
+        description: ""
         required: true
         type: string
       svnTarget:
+        description: ""
         type: boolean
         default: false
       # Architecture Action
       architecture:
+        description: ""
         type: string
       repoTag:
+        description: ""
         type: string
       makepkgArgs:
+        description: ""
         type: string
       multilib:
+        description: ""
         type: boolean
         default: false
       nvidiaUtils:
+        description: ""
         type: boolean
         default: false
       # Upload Action
       upload:
+        description: ""
         type: boolean
         default: true
       # Commit Action
       commit:
+        description: ""
         type: boolean
-        default: true 
+        default: true
 
 jobs:
-  package: 
+  package:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -108,7 +118,7 @@ jobs:
       - name: Setup Architecture
         if: ${{ fromJson(steps.version.outputs.updatePkg) == true }}
         id: architecture
-        uses: highkeep/pkgbuild_architecture-action@v2.0
+        uses: highkeep/pkgbuild_architecture-action@v2.1
         with:
           architecture: ${{ inputs.architecture }}
           tplPacmanConf: ${{ inputs.tplPacmanConf }}

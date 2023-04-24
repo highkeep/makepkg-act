@@ -19,7 +19,7 @@ on:
         description: "JSON combined architecture and repoTag"
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
-      updatePkg:
+      updatePkgbuild:
         description: "Also update PKGBUILD with architecture"
         type: boolean
         default: false
@@ -41,7 +41,7 @@ on:
       commit:
         description: "Commit version changes"
         type: boolean
-        default: true 
+        default: true
   workflow_dispatch:
     inputs:
       repoUrl:
@@ -60,7 +60,7 @@ on:
         description: "JSON combined architecture and repoTag"
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
-      updatePkg:
+      updatePkgbuild:
         description: "Also update PKGBUILD with architecture"
         type: boolean
         default: false
@@ -82,8 +82,8 @@ on:
       commit:
         description: "Commit version changes"
         type: boolean
-        default: true 
- 
+        default: true
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -103,6 +103,7 @@ jobs:
     with:
       repoURL: ${{ inputs.repoUrl }}
       repoPkg: ${{ inputs.repoPkg }}
+      updatePkgbuild: ${{ inputs.updatePkgbuild }}
       makepkgArgs: ${{ inputs.makepkgArgs }}
       multilib: ${{ inputs.multilib }}
       nvidiaUtils: ${{ inputs.nvidiaUtils }}
