@@ -9,10 +9,14 @@ on:
       repoPkg:
         required: true
         type: string
-      # architecture:
-      #   required: true
-      #   type: string
-      #   default: ""
+      makepkgArgs:
+        type: string
+      multilib:
+        type: boolean
+        default: false
+      nvidiaUtils:
+        type: boolean
+        default: false
       svnTarget:
         type: boolean
         default: false
