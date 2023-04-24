@@ -9,8 +9,6 @@ on:
         type: string
       repoPkg:
         description: "Package's name: <SomePkg>"
-          # The name of the package: <SomePkg>
-          # For SVN use the path after trunk/: <dir>/<SomePkg>
         required: true
         type: string
       makepkgArgs:
@@ -18,17 +16,14 @@ on:
         type: string
       multilib:
         description: "Add multilib"
-        # description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       nvidiaUtils:
         description: "Add nvidia-utils and lib32-nvidia-utils"
-        # description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       svnTarget:
         description: "Clone <SomePkg> with svn"
-        # description: "Enable if <SomePkg> requires SVN."
         type: boolean
         default: false
       art:
@@ -38,12 +33,10 @@ on:
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       upload:
         description: "Upload built package"
-        # description: "Disable for testing build process."
         type: boolean
         default: true
       commit:
         description: "Commit version changes"
-        # description: "Disable for testing build process."
         type: boolean
         default: true 
  
