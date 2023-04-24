@@ -4,26 +4,42 @@ on:
   workflow_dispatch:
     inputs:
       repoUrl:
+        description: "The git URL: https://aur.archlinux.org/<SomePkg>.git"
         required: true
         type: string
       repoPkg:
+        description: |
+          "The name of the package: <SomePkg>"
+          "For SVN use the path after trunk/: <dir>/<SomePkg>"
         required: true
         type: string
       makepkgArgs:
+        description: "Adds additional arguments to makepkg."
         type: string
       multilib:
+        description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       nvidiaUtils:
+        description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       svnTarget:
+        description: "Enable if <SomePkg> requires SVN."
         type: boolean
         default: false
       art:
         description: "JSON combined architecture and repoTag"
         required: true
         type: string
+      upload:
+        description: "Disable for testing build process."
+        type: boolean
+        default: true
+      commit:
+        description: "Disable for testing build process."
+        type: boolean
+        default: true 
  
 jobs:
   setup:
@@ -38,7 +54,6 @@ jobs:
           art: ${{ github.event.inputs.art }}
   process:
     needs: setup
-    # runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
     uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
@@ -51,9 +66,5 @@ jobs:
       svnTarget: ${{ inputs.svnTarget }}
       architecture: ${{ matrix.architecture }}
       repoTag: ${{ matrix.repoTag }}
-
-    # steps:
-    #   - run: |
-    #       echo ${{ matrix }}
-    #       echo ${{ matrix.architecture }}
-    #       echo ${{ matrix.repoTag }}
+      upload: ${{ inputs.upload }}
+      commit: ${{ inputs.commit }}
