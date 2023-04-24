@@ -133,7 +133,7 @@ jobs:
           echo "*************************************************************************"
           echo "*************************************************************************"
       - name: Makepkg Build and Check
-        if: ${{ steps.version.outputs.updatePkg == 'true' }}
+        if: ${{ fromJson(steps.version.outputs.updatePkg) == true }}
         id: makepkg
         uses: highkeep/pkgbuild-action@v1.1.9
         with:
