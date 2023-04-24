@@ -93,9 +93,9 @@ jobs:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
     uses: highkeep/pkgbuild/.github/workflows/builder.yml@v1.0
     with:
-      repoURL: ${{ github.event.inputs.repoUrl }}
-      repoPkg: ${{ github.event.inputs.repoPkg }}
-      makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
+      repoURL: ${{ inputs.repoUrl }}
+      repoPkg: ${{ inputs.repoPkg }}
+      makepkgArgs: ${{ inputs.makepkgArgs }}
       multilib: ${{ inputs.multilib }}
       nvidiaUtils: ${{ inputs.nvidiaUtils }}
       svnTarget: ${{ inputs.svnTarget }}
