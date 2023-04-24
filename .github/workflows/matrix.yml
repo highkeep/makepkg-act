@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       repoUrl:
-        description: "GIT repository: https://aur.archlinux.org/<SomePkg>.git"
+        name: "GIT repository"
+        description: "https://aur.archlinux.org/<SomePkg>.git"
         required: true
         type: string
       repoPkg:
