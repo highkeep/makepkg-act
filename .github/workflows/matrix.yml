@@ -46,9 +46,9 @@ jobs:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
       makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
-      multilib: ${{ github.event.inputs.multilib }}
-      nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
-      svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
+      multilib: ${{ inputs.multilib }}
+      nvidiaUtils: ${{ inputs.nvidiaUtils }}
+      svnTarget: ${{ inputs.svnTarget }}
       architecture: ${{ matrix.architecture }}
       repoTag: ${{ matrix.repoTag }}
 
