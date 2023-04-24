@@ -27,22 +27,22 @@ on:
         type: boolean
         default: false
       svnTarget:
-        description: "Clone with svn."
+        description: "Clone <SomePkg> with svn"
         # description: "Enable if <SomePkg> requires SVN."
         type: boolean
         default: false
       art:
-        description: "JSON combined architecture and repoTag."
+        description: "JSON combined architecture and repoTag"
         required: true
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       upload:
-        description: "Upload built package."
+        description: "Upload built package"
         # description: "Disable for testing build process."
         type: boolean
         default: true
       commit:
-        description: "Commit version changes."
+        description: "Commit version changes"
         # description: "Disable for testing build process."
         type: boolean
         default: true 
