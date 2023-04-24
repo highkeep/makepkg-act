@@ -1,4 +1,4 @@
-name: proton
+name: matrix
 
 on:
   workflow_dispatch:
@@ -26,17 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       art: ${{ steps.set-matrix.outputs.art }}
-      # arch: ${{ steps.set-matrix.outputs.arch }}
-      # repoTag: ${{ steps.set-matrix.outputs.repoTag }}
     steps:
       - id: set-matrix
         run: |
           echo "art=$art" >> $GITHUB_OUTPUT
-        # echo "arch=$arch" >> $GITHUB_OUTPUT
-        # echo "repoTag=$repoTag"" >> $GITHUB_OUTPUT
         env:
-          # arch: ${{ github.event.inputs.arch }}
-          # repoTag: ${{ github.event.inputs.repoTag }}
           art: ${{ github.event.inputs.arch_repoTag }}
   process:
     needs: setup
@@ -44,8 +38,6 @@ jobs:
     strategy:
       matrix: 
         art: ${{fromJson(needs.setup.outputs.art)}}
-        # arch: ${{fromJson(needs.setup.outputs.arch)}}
-        # repoTag: ${{fromJson(needs.setup.outputs.repoTag)}}
     uses: highkeep/pkgbuilder/.github/workflows/test.yml@main
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
