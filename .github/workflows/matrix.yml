@@ -40,8 +40,8 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
-      matrix: 
-        art: ${{fromJson(needs.setup.outputs.art)}}
+      matrix: ${{fromJson(needs.setup.outputs.art)}}
+        # art: ${{fromJson(needs.setup.outputs.art)}}
     # uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
     # with:
     #   repoURL: ${{ github.event.inputs.repoUrl }}
