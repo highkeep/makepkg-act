@@ -13,9 +13,21 @@ on:
         required: true
         type: string
         default: ""
+      makepkgArgs:
+        type: string
+      multilib:
+        type: boolean
+        default: false
+      nvidiaUtils:
+        type: boolean
+        default: false
       svnTarget:
         type: boolean
         default: false
+      repoTag: 
+        required: true
+        type: string
+        default: ""
 
 jobs:
   job1:
@@ -23,7 +35,19 @@ jobs:
     steps:
       - name: Print
         run: |
+          echo ${{ inputs.repoUrl }}
           echo ${{ github.event.inputs.repoUrl }}
+          echo ${{ inputs.repoPkg }}
           echo ${{ github.event.inputs.repoPkg }}
+          echo ${{ inputs.svnTarget }}
           echo ${{ github.event.inputs.svnTarget }}
+          echo ${{ inputs.architecture }}
           echo ${{ github.event.inputs.architecture }}
+          echo ${{ inputs.repoTag }}
+          echo ${{ github.event.inputs.repoTag }}
+          echo ${{ inputs.makepkgArgs }}
+          echo ${{ github.event.inputs.makepkgArgs }}
+          echo ${{ inputs.multilib }}
+          echo ${{ github.event.inputs.multilib }}
+          echo ${{ inputs.nvidiaUtils }}
+          echo ${{ github.event.inputs.nvidiaUtils }}
