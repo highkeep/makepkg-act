@@ -93,14 +93,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Clone Package
         id: clone
-        uses: highkeep/pkgbuild_clone-action@main
+        uses: highkeep/pkgbuild_clone-action@1.0
         with:
           repoUrl: ${{ github.event.inputs.repoUrl }}
           repoPkg: ${{ github.event.inputs.repoPkg }}
           svnTarget: ${{ github.event.inputs.svnTarget }}
       - name: Check version
         id: version
-        uses: highkeep/pkgbuild_version-action@main
+        uses: highkeep/pkgbuild_version-action@v1.0
         with:
           repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
@@ -108,7 +108,7 @@ jobs:
       - name: Setup Architecture
         if: ${{ steps.version.outputs.updatePkg == 'true' }}
         id: architecture
-        uses: highkeep/pkgbuild_architecture-action@main
+        uses: highkeep/pkgbuild_architecture-action@v1.0
         with:
           architecture: ${{ inputs.architecture }}
           tplPacmanConf: ${{ github.event.inputs.tplPacmanConf }}
@@ -130,7 +130,7 @@ jobs:
       - name: Makepkg Build and Check
         if: ${{ steps.version.outputs.updatePkg == 'true' }}
         id: makepkg
-        uses: highkeep/pkgbuild-action@master
+        uses: highkeep/pkgbuild-action@v1.1.9
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
