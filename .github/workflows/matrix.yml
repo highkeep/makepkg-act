@@ -35,7 +35,7 @@ jobs:
         run: |
           echo "art=$art" >> $GITHUB_OUTPUT
         env:
-          art: ${{ github.event.inputs.arch_repoTag }}
+          art: ${{ github.event.inputs.art }}
   process:
     needs: setup
     strategy:
