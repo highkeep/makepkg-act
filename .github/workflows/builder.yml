@@ -108,7 +108,7 @@ jobs:
       - name: Setup Architecture
         if: ${{ fromJson(steps.version.outputs.updatePkg) == true }}
         id: architecture
-        uses: highkeep/pkgbuild_architecture-action@v1.0
+        uses: highkeep/pkgbuild_architecture-action@v2.0
         with:
           architecture: ${{ inputs.architecture }}
           tplPacmanConf: ${{ inputs.tplPacmanConf }}
@@ -118,8 +118,8 @@ jobs:
           repoTagKey: ${{ inputs.repoTagKey }}
           repoServer: ${{ inputs.repoServer }}
           repoServerKey: ${{ inputs.repoServerKey }}
+          updatePkgbuild: ${{ inputs.updatePkg }}
           pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: ${{ inputs.updatePkg }}
       - name: Print Conf Files
         run: |
           echo "*************************************************************************"
