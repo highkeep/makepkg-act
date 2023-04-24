@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       repoPkg:
-        description: Repo Package
+        description: "Repo Package: <SomePkg>"
           # The name of the package: <SomePkg>
           # For SVN use the path after trunk/: <dir>/<SomePkg>
         required: true
@@ -36,11 +36,13 @@ on:
         required: true
         type: string
       upload:
-        description: "Disable for testing build process."
+        description: "Upload built package."
+        # description: "Disable for testing build process."
         type: boolean
         default: true
       commit:
-        description: "Disable for testing build process."
+        description: "Commit version changes."
+        # description: "Disable for testing build process."
         type: boolean
         default: true 
  
