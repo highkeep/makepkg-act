@@ -47,8 +47,12 @@ jobs:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
       svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
+      architecture: ${{ env.architecture }}
+      repoTag: ${{ env.repoTag }}
+    env:
       architecture: ${{ matrix.architecture }}
       repoTag: ${{ matrix.repoTag }}
+
     # steps:
     #   - run: |
     #       echo ${{ matrix }}
