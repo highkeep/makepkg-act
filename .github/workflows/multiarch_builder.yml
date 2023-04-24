@@ -17,7 +17,6 @@ on:
         default: false
       art:
         description: "JSON combined architecture and repoTag"
-        required: true
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       makepkgArgs:
@@ -55,7 +54,6 @@ on:
         default: false
       art:
         description: "JSON combined architecture and repoTag"
-        required: true
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       makepkgArgs:
