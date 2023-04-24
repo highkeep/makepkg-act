@@ -131,6 +131,7 @@ jobs:
           updatePkgbuild: ${{ inputs.updatePkgbuild }}
           pkg: ${{ steps.clone.outputs.pkg }}
       - name: Print Conf Files
+        if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         run: |
           echo "*************************************************************************"
           echo "*************************************************************************"
