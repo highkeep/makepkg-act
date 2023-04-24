@@ -120,6 +120,13 @@ jobs:
           repoServerKey: ${{ github.event.inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: ${{ github.event.inputs.updatePkg }}
+      - name: Print out conf files
+        run: |
+          echo "Contents of pacman.conf:"
+          cat ${{ steps.architecture.outputs.pacmanConf }}
+          echo
+          echo "Contents of makepkg.conf:"
+          cat ${{ steps.architecture.outputs.makepkgConf }}
       - name: Makepkg Build and Check
         if: ${{ steps.version.outputs.updatePkg == 'true' }}
         id: makepkg
