@@ -120,7 +120,7 @@ jobs:
           repoServerKey: ${{ inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: ${{ inputs.updatePkg }}
-      - name: Print out conf files
+      - name: Print Conf Files
         run: |
           echo "*************************************************************************"
           echo "*************************************************************************"
@@ -130,6 +130,10 @@ jobs:
           echo "*************************************************************************"
           echo "Contents of makepkg.conf:"
           cat ${{ steps.architecture.outputs.makepkgConf }}
+          echo "*************************************************************************"
+          echo "*************************************************************************"
+          echo "Contents of ${{ steps.clone.outputs.pkg }}/PKGBUILD:"
+          cat ${{ steps.clone.outputs.pkg }}/PKGBUILD
           echo "*************************************************************************"
           echo "*************************************************************************"
       - name: Makepkg Build and Check

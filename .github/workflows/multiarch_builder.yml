@@ -19,6 +19,10 @@ on:
         description: "JSON combined architecture and repoTag"
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
+      updatePkg:
+        description: "Also update PKGBUILD with architecture"
+        type: boolean
+        default: false
       makepkgArgs:
         description: "Add additional arguments to makepkg."
         type: string
@@ -56,8 +60,12 @@ on:
         description: "JSON combined architecture and repoTag"
         type: string
         default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
+      updatePkg:
+        description: "Also update PKGBUILD with architecture"
+        type: boolean
+        default: false
       makepkgArgs:
-        description: "Add additional arguments to makepkg."
+        description: "Add additional arguments to makepkg"
         type: string
       multilib:
         description: "Add multilib"
