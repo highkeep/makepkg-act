@@ -86,7 +86,7 @@ jobs:
         run: |
           echo "art={\"include\":$art}" >> $GITHUB_OUTPUT
         env:
-          art: ${{ github.event.inputs.art }}
+          art: ${{ inputs.art }}
   process:
     needs: setup
     strategy:
