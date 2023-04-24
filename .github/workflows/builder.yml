@@ -118,7 +118,7 @@ jobs:
       - name: Setup Architecture
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: architecture
-        uses: highkeep/pkgbuild_architecture-action@v2.1
+        uses: highkeep/pkgbuild_architecture-action@v2.2
         with:
           architecture: ${{ inputs.architecture }}
           tplPacmanConf: ${{ inputs.tplPacmanConf }}
