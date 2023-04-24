@@ -41,15 +41,12 @@ jobs:
     # runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
-        # art: ${{fromJson(needs.setup.outputs.art)}}
+    env:
     uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
       svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
-      architecture: $architecture
-      repoTag: $repoTag
-    env:
       architecture: ${{ matrix.architecture }}
       repoTag: ${{ matrix.repoTag }}
 
