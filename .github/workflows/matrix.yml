@@ -42,15 +42,15 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
         # art: ${{fromJson(needs.setup.outputs.art)}}
-    # uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
-    # with:
-    #   repoURL: ${{ github.event.inputs.repoUrl }}
-    #   repoPkg: ${{ github.event.inputs.repoPkg }}
-    #   svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
-    #   architecture: ${{ matrix.art.architecture }}
-    #   repoTag: ${{ matrix.art.repoTag }}
-    steps:
-      - run: |
-          echo ${{ matrix }}
-          echo ${{ matrix.architecture }}
-          echo ${{ matrix.repoTag }}
+    uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
+    with:
+      repoURL: ${{ github.event.inputs.repoUrl }}
+      repoPkg: ${{ github.event.inputs.repoPkg }}
+      svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
+      architecture: ${{ matrix.architecture }}
+      repoTag: ${{ matrix.repoTag }}
+    # steps:
+    #   - run: |
+    #       echo ${{ matrix }}
+    #       echo ${{ matrix.architecture }}
+    #       echo ${{ matrix.repoTag }}
