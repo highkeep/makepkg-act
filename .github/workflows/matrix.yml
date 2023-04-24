@@ -51,6 +51,6 @@ jobs:
     #   repoTag: ${{ matrix.art.repoTag }}
     steps:
       - run: |
-          echo ${{ matrix.art }}
-          echo ${{ matrix.art.architecture }}
-          echo ${{ matrix.art.repoTag }}
+          echo ${{ matrix }}
+          echo ${{ matrix.architecture }}
+          echo ${{ matrix.repoTag }}
