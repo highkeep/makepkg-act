@@ -122,11 +122,17 @@ jobs:
           updatePkg: ${{ inputs.updatePkg }}
       - name: Print out conf files
         run: |
+          echo "**************************************************"
+          echo "**************************************************"
           echo "Contents of pacman.conf:"
           cat ${{ steps.architecture.outputs.pacmanConf }}
-          echo
+          echo "**************************************************"
+          echo "\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/"
+          echo "**************************************************"
+          echo "**************************************************"
           echo "Contents of makepkg.conf:"
           cat ${{ steps.architecture.outputs.makepkgConf }}
+          echo "**************************************************"
       - name: Makepkg Build and Check
         if: ${{ steps.version.outputs.updatePkg == 'true' }}
         id: makepkg
