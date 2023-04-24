@@ -29,7 +29,6 @@ jobs:
           architecture: ${{ github.event.inputs.architecture }}
   process:
     needs: setup
-    runs-on: ubuntu-latest
     strategy:
       matrix: 
         architecture: ${{fromJson(needs.setup.outputs.matrix)}}
