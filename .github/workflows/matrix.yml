@@ -55,7 +55,7 @@ jobs:
     needs: setup
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
-    uses: highkeep/pkgbuilder/.github/workflows/build.yml@matrix
+    uses: highkeep/pkgbuilder/.github/workflows/build.yml@main
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
