@@ -47,8 +47,8 @@ jobs:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
       svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
-      architecture: ${{ env.architecture }}
-      repoTag: ${{ env.repoTag }}
+      architecture: $architecture
+      repoTag: $repoTag
     env:
       architecture: ${{ matrix.architecture }}
       repoTag: ${{ matrix.repoTag }}
