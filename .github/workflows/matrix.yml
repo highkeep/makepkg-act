@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       repoUrl:
-        name: "GIT repository"
-        description: "https://aur.archlinux.org/<SomePkg>.git"
+        description: "GIT repository: https://aur.archlinux.org/<SomePkg>.git"
         required: true
         type: string
       repoPkg:
@@ -56,7 +55,7 @@ jobs:
     needs: setup
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
-    uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
+    uses: highkeep/pkgbuilder/.github/workflows/build.yml@matrix
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
