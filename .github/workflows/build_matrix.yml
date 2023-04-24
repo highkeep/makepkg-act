@@ -12,6 +12,7 @@ on:
       architecture:
         required: true
         type: string
+        default: '["generic", "alderlake"]'
       svnTarget:
         type: boolean
         default: false
