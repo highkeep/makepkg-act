@@ -12,7 +12,7 @@ on:
       architecture:
         required: true
         type: string
-        default: '["generic", "alderlake"]'
+        default: ""
       svnTarget:
         type: boolean
         default: false
@@ -34,15 +34,15 @@ jobs:
       matrix: 
         architecture: ${{fromJson(needs.setup.outputs.matrix)}}
     steps:
-      - name: Print
-        run: |
-          echo ${{ github.event.inputs.repoUrl }}
-          echo ${{ github.event.inputs.repoPkg }}
-          echo ${{ github.event.inputs.svnTarget }}
-          echo ${{ matrix.architecture }}
-      # - uses: highkeep/pkgbuilder/.github/workflows/test.yml@main
-      #   with:
-      #     repoURL: ${{ github.event.inputs.repoUrl }}
-      #     repoPkg: ${{ github.event.inputs.repoPkg }}
-      #     svnTarget: ${{ github.event.inputs.svnTarget }}
-      #     architecture: ${{ matrix.architecture }}
+      # - name: Print
+      #   run: |
+      #     echo ${{ github.event.inputs.repoUrl }}
+      #     echo ${{ github.event.inputs.repoPkg }}
+      #     echo ${{ github.event.inputs.svnTarget }}
+      #     echo ${{ matrix.architecture }}
+      - uses: highkeep/pkgbuilder/.github/workflows/test.yml@main
+        with:
+          repoURL: ${{ github.event.inputs.repoUrl }}
+          repoPkg: ${{ github.event.inputs.repoPkg }}
+          svnTarget: ${{ github.event.inputs.svnTarget }}
+          architecture: ${{ matrix.architecture }}
