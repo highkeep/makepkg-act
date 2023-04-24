@@ -91,7 +91,7 @@ jobs:
     needs: setup
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
-    uses: highkeep/pkgbuild/.github/workflows/builder.yml@v1.0
+    uses: highkeep/pkgbuild/.github/workflows/builder.yml@testing
     with:
       repoURL: ${{ inputs.repoUrl }}
       repoPkg: ${{ inputs.repoPkg }}
