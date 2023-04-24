@@ -41,7 +41,6 @@ jobs:
     # runs-on: ubuntu-latest
     strategy:
       matrix: ${{fromJson(needs.setup.outputs.art)}}
-    env:
     uses: highkeep/pkgbuilder/.github/workflows/test.yml@matrix
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
