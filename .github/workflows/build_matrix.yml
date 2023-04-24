@@ -1,7 +1,7 @@
 name: build_matrix
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       repoUrl:
         required: true
@@ -9,11 +9,12 @@ on:
       repoPkg:
         required: true
         type: string
+      architecture:
+        required: true
+        type: string
       svnTarget:
         type: boolean
         default: false
-      architecture:
-        type: string
 
 jobs:
   setup:
@@ -22,20 +23,25 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - id: set-matrix
-        run: |
-          echo "matrix=$architecture" >> $GITHUB_OUTPUT
+        run: echo "matrix=$architecture" >> $GITHUB_OUTPUT
         env:
           architecture: ${{ github.event.inputs.architecture }}
   process:
     needs: setup
     runs-on: ubuntu-latest
-    # environment: build
     strategy:
       matrix: 
-        arch: ${{fromJson(needs.setup.outputs.matrix)}}
-    uses: highkeep/pkgbuilder/actions/workflows/build.yml@main
-    with:
-      repoURL: ${{ github.event.inputs.repoURL }}
-      repoPkg: ${{ github.event.inputs.repoPkg }}
-      svnTarget: ${{ github.event.inputs.svnTarget }}
-      architecture: ${{ matrix.arch }}
+        architecture: ${{fromJson(needs.setup.outputs.matrix)}}
+    steps:
+      - name: Print
+        run: |
+          echo ${{ github.event.inputs.repoUrl }}
+          echo ${{ github.event.inputs.repoPkg }}
+          echo ${{ github.event.inputs.svnTarget }}
+          echo ${{ matrix.architecture }}
+      - uses: highkeep/pkgbuilder/.github/workflows/test.yml@main
+        with:
+          repoURL: ${{ github.event.inputs.repoUrl }}
+          repoPkg: ${{ github.event.inputs.repoPkg }}
+          svnTarget: ${{ github.event.inputs.svnTarget }}
+          architecture: ${{ matrix.architecture }}

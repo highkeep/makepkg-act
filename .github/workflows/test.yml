@@ -16,7 +16,7 @@ on:
         type: string
 
 jobs:
-  setup:
+  job1:
     runs-on: ubuntu-latest
     steps:
       - name: Print
