@@ -26,4 +26,4 @@ jobs:
           echo ${{ github.event.inputs.repoUrl }}
           echo ${{ github.event.inputs.repoPkg }}
           echo ${{ github.event.inputs.svnTarget }}
-          echo ${{ matrix.architecture }}
+          echo ${{ github.event.inputs.architecture }}
