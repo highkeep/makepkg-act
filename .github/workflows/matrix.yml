@@ -38,6 +38,7 @@ jobs:
           art: ${{ github.event.inputs.art }}
   process:
     needs: setup
+    runs-on: ubuntu-latest
     strategy:
       matrix: 
         art: ${{fromJson(needs.setup.outputs.art)}}
