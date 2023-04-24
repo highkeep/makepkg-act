@@ -80,6 +80,7 @@ on:
       upload:
         type: boolean
         default: true
+      # Commit Action
       commit:
         type: boolean
         default: true 
@@ -101,7 +102,7 @@ jobs:
         id: version
         uses: highkeep/pkgbuild_version-action@main
         with:
-          repoTag: ${{ github.event.inputs.repoTag }}
+          repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
           pkgRef: ${{ steps.clone.outputs.pkgRef }}
       - name: Setup Architecture
@@ -109,11 +110,11 @@ jobs:
         id: architecture
         uses: highkeep/pkgbuild_architecture-action@main
         with:
-          architecture: ${{ github.event.inputs.architecture }}
+          architecture: ${{ inputs.architecture }}
           tplPacmanConf: ${{ github.event.inputs.tplPacmanConf }}
           tplMakepkgConf: ${{ github.event.inputs.tplPacmanConf }}
           confOutDir: ${{ github.event.inputs.confOutDir }}
-          repoTag: ${{ github.event.inputs.repoTag }}
+          repoTag: ${{ inputs.repoTag }}
           repoTagKey: ${{ github.event.inputs.repoTagKey }}
           repoServer: ${{ github.event.inputs.repoServer }}
           repoServerKey: ${{ github.event.inputs.repoServerKey }}
