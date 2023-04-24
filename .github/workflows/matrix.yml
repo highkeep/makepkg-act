@@ -67,11 +67,3 @@ jobs:
       repoTag: ${{ matrix.repoTag }}
       upload: ${{ inputs.upload }}
       commit: ${{ inputs.commit }}
-
-jobs:
-  job1: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print
-        run: | 
-          echo "Hi There!"
