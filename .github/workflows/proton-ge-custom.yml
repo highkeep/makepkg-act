@@ -6,38 +6,42 @@ on:
       arch: 
         required: true
         type: string
-
-
-# env:
-#   architectures: '["generic", "alderlake"]'
-  # architectures: "[\"generic\", \"alderlake\"]"
-  # architectures: "{\"arch\":[\"generic\", \"alderlake\"]}"
+      repoTag:
+        required: true
+        type: string
+      arch_repoTag:
+        required: true
+        type: string
  
 jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-  #     matrix: ${{ fromJSON(env.architectures) }}
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      arch_repoTag: ${{ steps.set-matrix.outputs.arch_repoTag }}
+      # arch: ${{ steps.set-matrix.outputs.arch }}
+      # repoTag: ${{ steps.set-matrix.outputs.repoTag }}
     steps:
       - id: set-matrix
         run: |
-          echo "matrix=$arch" >> $GITHUB_OUTPUT
+          echo "arch_repoTag=$arch_repoTag" >> $GITHUB_OUTPUT
+        # echo "arch=$arch" >> $GITHUB_OUTPUT
+        # echo "repoTag=$repoTag"" >> $GITHUB_OUTPUT
         env:
           arch: ${{ github.event.inputs.arch }}
+          repoTag: ${{ github.event.inputs.repoTag }}
+          arch_repoTag: ${{ github.event.inputs.arch_repoTag }}
   process:
     needs: setup
     runs-on: ubuntu-latest
-    # environment: build
     strategy:
       matrix: 
-        # arch: ${{ fromJSON(env.architectures) }}
-        arch: ${{fromJson(needs.setup.outputs.matrix)}}
-      # matrix: ${{ fromJSON(env.architectures) }}
-      # matrix:
-      #   arch: ${{ fromJSON(env.architectures) }}
-        # arch: ${{ fromJSON(vars.ARCHITECTURES) }}
+        arch_repoTag: ${{fromJson(needs.setup.outputs.arch_repoTag)}}
+        # arch: ${{fromJson(needs.setup.outputs.arch)}}
+        # repoTag: ${{fromJson(needs.setup.outputs.repoTag)}}
     steps:
       - run: |
           echo ${{ matrix.arch }}
-          echo ${{ env.architectures }}
+          echo ${{ matrix.repoTag }}
+          echo ${{ matrix.arch_repoTag }}
+          echo ${{ matrix.arch_repoTag.arch }}
+          echo ${{ matrix.arch_repoTag.repoTag }}

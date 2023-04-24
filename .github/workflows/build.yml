@@ -1,4 +1,4 @@
-name: build
+name: build_matrix
 
 on:
   workflow_call:
@@ -85,7 +85,18 @@ on:
         default: true 
 
 jobs:
-  package: 
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: echo "matrix=$architecture" >> $GITHUB_OUTPUT
+  package:
+    needs: setup
+    strategy:
+      matrix: 
+        architecture: ${{fromJson(needs.setup.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -109,7 +120,7 @@ jobs:
         id: architecture
         uses: highkeep/pkgbuild_architecture-action@main
         with:
-          architecture: ${{ github.event.inputs.architecture }}
+          architecture: ${{ matrix.architecture }}
           tplPacmanConf: ${{ github.event.inputs.tplPacmanConf }}
           tplMakepkgConf: ${{ github.event.inputs.tplPacmanConf }}
           confOutDir: ${{ github.event.inputs.confOutDir }}
@@ -119,66 +130,66 @@ jobs:
           repoServerKey: ${{ github.event.inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
           updatePkg: ${{ github.event.inputs.updatePkg }}
-      - name: Makepkg Build and Check
-        if: ${{ steps.version.outputs.updatePkg == 'true' }}
-        id: makepkg
-        uses: highkeep/pkgbuild-action@master
-        with:
-          pkgdir: ${{ steps.clone.outputs.pkg }}
-          pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
-          makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
-          makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
-          multilib: ${{ github.event.inputs.multilib }}
-          nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
-          repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
-      - name: Print Package Files
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        run: |
-          echo "Successfully created the following package archive"
-          echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
-          echo "Package: ${{ steps.makepkg.outputs.repofile0 }}"
-          echo "Package: ${{ steps.makepkg.outputs.repofile1 }}"
-          echo "Package: ${{ steps.makepkg.outputs.repofile2 }}"
-          echo "Package: ${{ steps.makepkg.outputs.repofile3 }}"
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.pkgfile0 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile0 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile1 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile2 }}
-          overwrite: true
-      - uses: svenstaro/upload-release-action@v2
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
-        with:
-          repo_token: ${{secrets.GITHUB_TOKEN}}
-          tag: ${{ steps.architecture.outputs.repoTag }}
-          file: ${{ steps.makepkg.outputs.repofile3 }}
-          overwrite: true
-      - name: Add & Commit
-        if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.commit == 'true') }}
-        uses: EndBug/add-and-commit@v9.1.1
-        with:
-          add: ${{ steps.version.outputs.refFile }}
-          fetch: true
-          pull: --rebase --autostash
+      # - name: Makepkg Build and Check
+      #   if: ${{ steps.version.outputs.updatePkg == 'true' }}
+      #   id: makepkg
+      #   uses: highkeep/pkgbuild-action@master
+      #   with:
+      #     pkgdir: ${{ steps.clone.outputs.pkg }}
+      #     pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
+      #     makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
+      #     makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
+      #     multilib: ${{ github.event.inputs.multilib }}
+      #     nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
+      #     repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
+      # - name: Print Package Files
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   run: |
+      #     echo "Successfully created the following package archive"
+      #     echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
+      #     echo "Package: ${{ steps.makepkg.outputs.repofile0 }}"
+      #     echo "Package: ${{ steps.makepkg.outputs.repofile1 }}"
+      #     echo "Package: ${{ steps.makepkg.outputs.repofile2 }}"
+      #     echo "Package: ${{ steps.makepkg.outputs.repofile3 }}"
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.pkgfile0 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile0 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile1 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile2 }}
+      #     overwrite: true
+      # - uses: svenstaro/upload-release-action@v2
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
+      #   with:
+      #     repo_token: ${{secrets.GITHUB_TOKEN}}
+      #     tag: ${{ steps.architecture.outputs.repoTag }}
+      #     file: ${{ steps.makepkg.outputs.repofile3 }}
+      #     overwrite: true
+      # - name: Add & Commit
+      #   if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.commit == 'true') }}
+      #   uses: EndBug/add-and-commit@v9.1.1
+      #   with:
+      #     add: ${{ steps.version.outputs.refFile }}
+      #     fetch: true
+      #     pull: --rebase --autostash
