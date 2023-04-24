@@ -80,6 +80,7 @@ on:
       upload:
         type: boolean
         default: true
+      # Commit Action
       commit:
         type: boolean
         default: true 

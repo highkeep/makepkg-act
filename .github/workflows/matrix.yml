@@ -11,6 +11,15 @@ on:
         description: "Package's name: <SomePkg>"
         required: true
         type: string
+      svnTarget:
+        description: "Clone <SomePkg> with svn"
+        type: boolean
+        default: false
+      art:
+        description: "JSON combined architecture and repoTag"
+        required: true
+        type: string
+        default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       makepkgArgs:
         description: "Add additional arguments to makepkg."
         type: string
@@ -22,15 +31,6 @@ on:
         description: "Add nvidia-utils and lib32-nvidia-utils"
         type: boolean
         default: false
-      svnTarget:
-        description: "Clone <SomePkg> with svn"
-        type: boolean
-        default: false
-      art:
-        description: "JSON combined architecture and repoTag"
-        required: true
-        type: string
-        default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       upload:
         description: "Upload built package"
         type: boolean
