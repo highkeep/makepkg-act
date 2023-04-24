@@ -95,9 +95,9 @@ jobs:
         id: clone
         uses: highkeep/pkgbuild_clone-action@v1.0
         with:
-          repoUrl: ${{ github.event.inputs.repoUrl }}
-          repoPkg: ${{ github.event.inputs.repoPkg }}
-          svnTarget: ${{ github.event.inputs.svnTarget }}
+          repoUrl: ${{ inputs.repoUrl }}
+          repoPkg: ${{ inputs.repoPkg }}
+          svnTarget: ${{ inputs.svnTarget }}
       - name: Check version
         id: version
         uses: highkeep/pkgbuild_version-action@v1.0
@@ -111,15 +111,15 @@ jobs:
         uses: highkeep/pkgbuild_architecture-action@v1.0
         with:
           architecture: ${{ inputs.architecture }}
-          tplPacmanConf: ${{ github.event.inputs.tplPacmanConf }}
-          tplMakepkgConf: ${{ github.event.inputs.tplPacmanConf }}
-          confOutDir: ${{ github.event.inputs.confOutDir }}
+          tplPacmanConf: ${{ inputs.tplPacmanConf }}
+          tplMakepkgConf: ${{ inputs.tplPacmanConf }}
+          confOutDir: ${{ inputs.confOutDir }}
           repoTag: ${{ inputs.repoTag }}
-          repoTagKey: ${{ github.event.inputs.repoTagKey }}
-          repoServer: ${{ github.event.inputs.repoServer }}
-          repoServerKey: ${{ github.event.inputs.repoServerKey }}
+          repoTagKey: ${{ inputs.repoTagKey }}
+          repoServer: ${{ inputs.repoServer }}
+          repoServerKey: ${{ inputs.repoServerKey }}
           pkg: ${{ steps.clone.outputs.pkg }}
-          updatePkg: ${{ github.event.inputs.updatePkg }}
+          updatePkg: ${{ inputs.updatePkg }}
       - name: Print out conf files
         run: |
           echo "Contents of pacman.conf:"
@@ -135,9 +135,9 @@ jobs:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
           makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
-          makepkgArgs: ${{ github.event.inputs.makepkgArgs }}
-          multilib: ${{ github.event.inputs.multilib }}
-          nvidiaUtils: ${{ github.event.inputs.nvidiaUtils }}
+          makepkgArgs: ${{ inputs.makepkgArgs }}
+          multilib: ${{ inputs.multilib }}
+          nvidiaUtils: ${{ inputs.nvidiaUtils }}
           repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
       - name: Print Package Files
         if: ${{ (steps.version.outputs.updatePkg == 'true') && (github.event.inputs.upload == 'true') }}
