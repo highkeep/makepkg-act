@@ -16,6 +16,10 @@ on:
       svnTarget:
         type: boolean
         default: false
+      repoTag: 
+        required: true
+        type: string
+        default: ""
 
 jobs:
   job1:
@@ -27,3 +31,4 @@ jobs:
           echo ${{ github.event.inputs.repoPkg }}
           echo ${{ github.event.inputs.svnTarget }}
           echo ${{ github.event.inputs.architecture }}
+          echo ${{ github.event.inputs.repoTag }}

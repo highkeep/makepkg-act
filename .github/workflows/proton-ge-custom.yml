@@ -3,13 +3,21 @@ name: proton
 on:
   workflow_dispatch:
     inputs:
-      arch: 
+      repoUrl:
         required: true
         type: string
-      repoTag:
+      repoPkg:
         required: true
         type: string
-      arch_repoTag:
+      architecture:
+        required: true
+        type: string
+        default: ""
+      svnTarget:
+        type: boolean
+        default: false
+      art:
+        description: "JSON combined architecture and repoTag"
         required: true
         type: string
  
@@ -17,31 +25,38 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     outputs:
-      arch_repoTag: ${{ steps.set-matrix.outputs.arch_repoTag }}
+      art: ${{ steps.set-matrix.outputs.art }}
       # arch: ${{ steps.set-matrix.outputs.arch }}
       # repoTag: ${{ steps.set-matrix.outputs.repoTag }}
     steps:
       - id: set-matrix
         run: |
-          echo "arch_repoTag=$arch_repoTag" >> $GITHUB_OUTPUT
+          echo "art=$art" >> $GITHUB_OUTPUT
         # echo "arch=$arch" >> $GITHUB_OUTPUT
         # echo "repoTag=$repoTag"" >> $GITHUB_OUTPUT
         env:
-          arch: ${{ github.event.inputs.arch }}
-          repoTag: ${{ github.event.inputs.repoTag }}
-          arch_repoTag: ${{ github.event.inputs.arch_repoTag }}
+          # arch: ${{ github.event.inputs.arch }}
+          # repoTag: ${{ github.event.inputs.repoTag }}
+          art: ${{ github.event.inputs.arch_repoTag }}
   process:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        arch_repoTag: ${{fromJson(needs.setup.outputs.arch_repoTag)}}
+        art: ${{fromJson(needs.setup.outputs.art)}}
         # arch: ${{fromJson(needs.setup.outputs.arch)}}
         # repoTag: ${{fromJson(needs.setup.outputs.repoTag)}}
-    steps:
-      - run: |
-          echo ${{ matrix.arch }}
-          echo ${{ matrix.repoTag }}
-          echo ${{ matrix.arch_repoTag }}
-          echo ${{ matrix.arch_repoTag.arch }}
-          echo ${{ matrix.arch_repoTag.repoTag }}
+    uses: highkeep/pkgbuilder/.github/workflows/test.yml@main
+    with:
+      repoURL: ${{ github.event.inputs.repoUrl }}
+      repoPkg: ${{ github.event.inputs.repoPkg }}
+      svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
+      architecture: ${{ matrix.art.architecture }}
+      repoTag: ${{ matrix.art.repoTag }}
+    # steps:
+    #   - run: |
+    #       echo ${{ matrix.arch }}
+    #       echo ${{ matrix.repoTag }}
+    #       echo ${{ matrix.arch_repoTag }}
+    #       echo ${{ matrix.arch_repoTag.arch }}
+    #       echo ${{ matrix.arch_repoTag.repoTag }}
