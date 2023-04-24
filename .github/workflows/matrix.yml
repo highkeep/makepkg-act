@@ -2,3 +2,11 @@ name: matrix
 
 on:
   workflow_dispatch:
+
+jobs:
+  job1: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print
+        run: | 
+          echo "Hi There!"
