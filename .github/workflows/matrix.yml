@@ -34,7 +34,6 @@ jobs:
           art: ${{ github.event.inputs.arch_repoTag }}
   process:
     needs: setup
-    runs-on: ubuntu-latest
     strategy:
       matrix: 
         art: ${{fromJson(needs.setup.outputs.art)}}
