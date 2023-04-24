@@ -14,27 +14,28 @@ on:
         required: true
         type: string
       makepkgArgs:
-        description: "Adds additional arguments to makepkg."
+        description: "Add additional arguments to makepkg."
         type: string
       multilib:
-        description: "Adds multilib"
+        description: "Add multilib"
         # description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       nvidiaUtils:
-        description: "Adds nvidia-utils and lib32-nvidia-utils"
+        description: "Add nvidia-utils and lib32-nvidia-utils"
         # description: "Enable if desired or if <SomePkg> requires it."
         type: boolean
         default: false
       svnTarget:
-        description: "Enable SVN clone"
+        description: "Clone with svn."
         # description: "Enable if <SomePkg> requires SVN."
         type: boolean
         default: false
       art:
-        description: "JSON combined architecture and repoTag"
+        description: "JSON combined architecture and repoTag."
         required: true
         type: string
+        default: '[{"architecture":"alderlake", "repoTag":"alderlake"},{"architecture":"generic", "repoTag":"generic_x86_64"}]'
       upload:
         description: "Upload built package."
         # description: "Disable for testing build process."
