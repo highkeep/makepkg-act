@@ -36,7 +36,7 @@ jobs:
     with:
       repoURL: ${{ github.event.inputs.repoUrl }}
       repoPkg: ${{ github.event.inputs.repoPkg }}
-      svnTarget: ${{ github.event.inputs.svnTarget }}
+      svnTarget: ${{ fromJson(github.event.inputs.svnTarget) }}
       architecture: ${{ matrix.architecture }}
     # steps:
     #   - name: Print
