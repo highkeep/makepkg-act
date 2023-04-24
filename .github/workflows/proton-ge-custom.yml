@@ -9,10 +9,10 @@ on:
       repoPkg:
         required: true
         type: string
-      architecture:
-        required: true
-        type: string
-        default: ""
+      # architecture:
+      #   required: true
+      #   type: string
+      #   default: ""
       svnTarget:
         type: boolean
         default: false
