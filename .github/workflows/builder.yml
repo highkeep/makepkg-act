@@ -32,7 +32,7 @@ on:
         type: string
       pkg:
         type: string
-      updatePkg:
+      updatePkgbuild:
         type: boolean
         default: false
       # # Build Action
@@ -100,7 +100,7 @@ jobs:
           svnTarget: ${{ inputs.svnTarget }}
       - name: Check version
         id: version
-        uses: highkeep/pkgbuild_version-action@v1.0
+        uses: highkeep/pkgbuild_version-action@v2.0
         with:
           repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
@@ -118,7 +118,7 @@ jobs:
           repoTagKey: ${{ inputs.repoTagKey }}
           repoServer: ${{ inputs.repoServer }}
           repoServerKey: ${{ inputs.repoServerKey }}
-          updatePkgbuild: ${{ inputs.updatePkg }}
+          updatePkgbuild: ${{ inputs.updatePkgbuild }}
           pkg: ${{ steps.clone.outputs.pkg }}
       - name: Print Conf Files
         run: |
@@ -157,7 +157,7 @@ jobs:
         run: |
           echo "*************************************************************************"
           echo "*************************************************************************"
-          echo "Successfully created the following package archive"
+          echo "Successfully created the following package archive(s)"
           echo "Package: ${{ steps.makepkg.outputs.pkgfile0 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile0 }}"
           echo "Package: ${{ steps.makepkg.outputs.repofile1 }}"
