@@ -33,7 +33,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo "art=$art" >> $GITHUB_OUTPUT
+          echo "art={\"include\":$art}" >> $GITHUB_OUTPUT
         env:
           art: ${{ github.event.inputs.art }}
   process:
