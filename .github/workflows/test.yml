@@ -2,24 +2,24 @@ name: test
 
 on:
   workflow_call:
-    inputs:
-      repoUrl:
-        required: true
-        type: string
-      repoPkg:
-        required: true
-        type: string
-      architecture:
-        required: true
-        type: string
-        default: ""
-      svnTarget:
-        type: boolean
-        default: false
-      repoTag: 
-        required: true
-        type: string
-        default: ""
+    # inputs:
+    #   repoUrl:
+    #     required: true
+    #     type: string
+    #   repoPkg:
+    #     required: true
+    #     type: string
+    #   architecture:
+    #     required: true
+    #     type: string
+    #     default: ""
+    #   svnTarget:
+    #     type: boolean
+    #     default: false
+    #   repoTag: 
+    #     required: true
+    #     type: string
+    #     default: ""
 
 jobs:
   job1:
