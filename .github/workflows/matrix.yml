@@ -1,0 +1,4 @@
+name: matrix
+
+on:
+  workflow_dispatch:
