@@ -8,10 +8,10 @@ on:
         required: true
         type: string
       repoPkg:
-        description: >
-          - Repo Package
-          - The name of the package: <SomePkg>\n
-          - For SVN use the path after trunk/: <dir>/<SomePkg>\n
+        description: |
+          Repo Package
+          The name of the package: <SomePkg>
+          For SVN use the path after trunk/: <dir>/<SomePkg>
         required: true
         type: string
       makepkgArgs:
