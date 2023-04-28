@@ -38,13 +38,13 @@ on:
       # # Build Action
       makepkgArgs:
         type: string
-      multilib:
-        type: boolean
-        default: false
       updateSrcInfo:
         description: "Allow .SRCINFO to be regenerated."
         type: boolean
         required: false
+      multilib:
+        type: boolean
+        default: false
       nvidiaUtils:
         type: boolean
         default: false
