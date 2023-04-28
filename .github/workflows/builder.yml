@@ -44,6 +44,9 @@ on:
       nvidiaUtils:
         type: boolean
         default: false
+      recvKeys:
+        description: "Import PGP signatures."
+        type: string
       # # Upload Action
       upload:
         type: boolean
@@ -158,7 +161,7 @@ jobs:
       - name: Makepkg Build and Check
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: makepkg
-        uses: highkeep/pkgbuild-action@v1.1.9
+        uses: highkeep/pkgbuild-action@v1.2.0
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
@@ -166,6 +169,7 @@ jobs:
           makepkgArgs: ${{ inputs.makepkgArgs }}
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
+          recvKeys: ${{ inputs.recvKeys }}
           repoReleaseTag: ${{ steps.architecture.outputs.repoTag }}
       - name: Print Package Files
         if: ${{ (fromJson(steps.version.outputs.requiresUpdate) == true) && (inputs.upload == true) }}
