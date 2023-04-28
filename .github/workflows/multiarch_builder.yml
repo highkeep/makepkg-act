@@ -26,6 +26,10 @@ on:
       makepkgArgs:
         description: "Add additional arguments to makepkg."
         type: string
+      updateSrcInfo:
+        description: "Allow .SRCINFO to be regenerated."
+        type: boolean
+        required: false
       multilib:
         description: "Add multilib"
         type: boolean
@@ -109,6 +113,7 @@ jobs:
       repoPkg: ${{ inputs.repoPkg }}
       updatePkgbuild: ${{ inputs.updatePkgbuild }}
       makepkgArgs: ${{ inputs.makepkgArgs }}
+      updateSrcInfo: ${{ inputs.updateSrcInfo }}
       multilib: ${{ inputs.multilib }}
       nvidiaUtils: ${{ inputs.nvidiaUtils }}
       recvKeys: ${{ inputs.recvKeys }}

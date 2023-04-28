@@ -41,6 +41,10 @@ on:
       multilib:
         type: boolean
         default: false
+      updateSrcInfo:
+        description: "Allow .SRCINFO to be regenerated."
+        type: boolean
+        required: false
       nvidiaUtils:
         type: boolean
         default: false
@@ -167,6 +171,7 @@ jobs:
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
           makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
           makepkgArgs: ${{ inputs.makepkgArgs }}
+          updateSrcInfo: ${{ inputs.updateSrcInfo }}
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
           recvKeys: ${{ inputs.recvKeys }}
