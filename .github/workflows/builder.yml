@@ -117,11 +117,12 @@ jobs:
           svnTarget: ${{ inputs.svnTarget }}
       - name: Check version
         id: version
-        uses: highkeep/pkgbuild_version-action@v2.0
+        uses: highkeep/pkgbuild_version-action@v2.1
         with:
           repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
           pkgRef: ${{ steps.clone.outputs.pkgRef }}
+          updateSrcInfo: ${{ inputs.updateSrcInfo }}
       - name: Setup Architecture
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: architecture
@@ -165,13 +166,12 @@ jobs:
       - name: Makepkg Build and Check
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: makepkg
-        uses: highkeep/pkgbuild-action@v1.3.0
+        uses: highkeep/pkgbuild-action@v1.2.0
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
           makepkgConf: ${{ steps.architecture.outputs.makepkgConf }}
           makepkgArgs: ${{ inputs.makepkgArgs }}
-          updateSrcInfo: ${{ inputs.updateSrcInfo }}
           multilib: ${{ inputs.multilib }}
           nvidiaUtils: ${{ inputs.nvidiaUtils }}
           recvKeys: ${{ inputs.recvKeys }}
