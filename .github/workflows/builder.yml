@@ -161,7 +161,7 @@ jobs:
       - name: Makepkg Build and Check
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: makepkg
-        uses: highkeep/pkgbuild-action@v1.2.0
+        uses: highkeep/pkgbuild-action@v1.3.0
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
