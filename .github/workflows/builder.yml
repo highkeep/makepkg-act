@@ -117,7 +117,7 @@ jobs:
           svnTarget: ${{ inputs.svnTarget }}
       - name: Check version
         id: version
-        uses: highkeep/pkgbuild_version-action@v2.1
+        uses: highkeep/pkgbuild_version-action@v2.1.2
         with:
           repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
@@ -166,7 +166,7 @@ jobs:
       - name: Makepkg Build and Check
         if: ${{ fromJson(steps.version.outputs.requiresUpdate) == true }}
         id: makepkg
-        uses: highkeep/pkgbuild-action@v1.2.0
+        uses: highkeep/pkgbuild-action@v1.2.1
         with:
           pkgdir: ${{ steps.clone.outputs.pkg }}
           pacmanConf: ${{ steps.architecture.outputs.pacmanConf }}
