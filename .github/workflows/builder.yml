@@ -117,7 +117,7 @@ jobs:
           svnTarget: ${{ inputs.svnTarget }}
       - name: Check version
         id: version
-        uses: highkeep/pkgbuild_version-action@v2.1.2
+        uses: highkeep/pkgbuild_version-action@main
         with:
           repoTag: ${{ inputs.repoTag }}
           pkg: ${{ steps.clone.outputs.pkg }}
